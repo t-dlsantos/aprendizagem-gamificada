@@ -20,19 +20,19 @@ public class CoursesReleasedTest {
   }
 
   @Test
-  public void testLiberacaoCoursesMediaIgual7() {
+  public void testReleaseCoursesWithMediaEqual7() {
     course.finalize(7.0, student);
     assertEquals(3, student.getAvailableCourses()); 
   }
 
   @Test
-  public void testLiberacaoCoursesMediaMaiorQue7() {
+  public void testReleaseCoursesWithMediaGreaterThan7() {
     course.finalize(8.5, student);
     assertEquals(3, student.getAvailableCourses());
   }
 
   @Test
-  public void testNaoLiberacaoCoursesMediaMenorQue7() {
+  public void testDoNotReleaseCoursesWhenMediaLessThan7() {
     course.finalize(6.5, student);
     assertEquals(0, student.getAvailableCourses());
   }
