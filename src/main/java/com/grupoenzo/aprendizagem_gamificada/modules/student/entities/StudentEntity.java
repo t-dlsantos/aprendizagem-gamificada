@@ -1,0 +1,40 @@
+package com.grupoenzo.aprendizagem_gamificada.modules.student.entities;
+
+import com.grupoenzo.aprendizagem_gamificada.modules.enrollment.entities.EnrollmentEntity;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.List;
+import java.util.UUID;
+
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity(name = "student")
+public class StudentEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
+
+    private String name;
+    private int tickets;
+
+    @OneToMany(mappedBy = "student")
+    private List<EnrollmentEntity> enrollments;
+
+    public void addTickets(int quantity) {
+        this.tickets = this.tickets + quantity;
+    }
+
+    public boolean useTicket() {
+        if (this.tickets <= 0) return false;
+        this.tickets--;
+        return true;
+    }
+
+}
