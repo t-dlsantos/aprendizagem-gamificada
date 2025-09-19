@@ -1,8 +1,6 @@
 package com.grupoenzo.aprendizagem_gamificada.modules.enrollment.repositories;
 
-import com.grupoenzo.aprendizagem_gamificada.modules.course.entities.CourseEntity;
 import com.grupoenzo.aprendizagem_gamificada.modules.enrollment.entities.EnrollmentEntity;
-import com.grupoenzo.aprendizagem_gamificada.modules.student.entities.StudentEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

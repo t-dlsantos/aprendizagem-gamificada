@@ -47,7 +47,7 @@ public class FinalizeCourseUseCaseTest {
     }
 
     @Test
-    @DisplayName("Should release 3 more tickets when grade equals to 7")
+    @DisplayName("Should release 3 more tickets when average grade equals to 7")
     public void shouldReleaseTicketsWhenAverageGradeIs7() {
         module.setGrade(7);
         course.setModules(List.of(module));
@@ -58,6 +58,34 @@ public class FinalizeCourseUseCaseTest {
         var ticketsAfter = finalizeCourseUseCase.execute(student.getId(), course.getId()).getStudent().getTickets();
 
         assertEquals(ticketsBefore + 3, ticketsAfter);
+    }
+
+    @Test
+    @DisplayName("Should release 3 more tickets when average grande is above 7")
+    public void shouldReleaseTicketsWhenAverageGradeIsAbove7() {
+        module.setGrade(8);
+        course.setModules(List.of(module));
+
+        when(enrollmentRepository.findByStudentIdAndCourseId(student.getId(), course.getId())).thenReturn(Optional.of(enrollment));
+
+        var ticketsBefore = student.getTickets();
+        var ticketsAfter = finalizeCourseUseCase.execute(student.getId(), course.getId()).getStudent().getTickets();
+
+        assertEquals(ticketsBefore + 3, ticketsAfter);
+    }
+
+    @Test
+    @DisplayName("Should not release 3 more tickets when average grade is below 7")
+    public void shouldNotReleaseTicketsWhenAverageGradeIsBelow7() {
+        module.setGrade(5);
+        course.setModules(List.of(module));
+
+        when(enrollmentRepository.findByStudentIdAndCourseId(student.getId(), course.getId())).thenReturn(Optional.of(enrollment));
+
+        var ticketsBefore = student.getTickets();
+        var ticketsAfter = finalizeCourseUseCase.execute(student.getId(), course.getId()).getStudent().getTickets();
+
+        assertEquals(ticketsBefore, ticketsAfter);
     }
 
 }

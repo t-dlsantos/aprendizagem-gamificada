@@ -25,10 +25,15 @@ public class FinalizeCourseUseCase {
     }
 
     public EnrollmentEntity execute(UUID idStudent, UUID idCourse) {
-        return enrollmentRepository
+        EnrollmentEntity enrollment = enrollmentRepository
                 .findByStudentIdAndCourseId(idStudent, idCourse)
-                // TODO: improve handling of exception with a specified class
-                .orElseThrow(RuntimeException::new);
+                .orElseThrow(() -> new RuntimeException("Enrollment not found"));
+
+        StudentEntity student = enrollment.getStudent();
+        student.setTickets(student.getTickets() - 1);
+
+        studentRepository.save(student);
+        return enrollment;
     }
 
 }
