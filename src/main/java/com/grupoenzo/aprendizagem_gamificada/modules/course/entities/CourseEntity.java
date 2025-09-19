@@ -31,7 +31,7 @@ public class CourseEntity {
     private List<ModuleEntity> modules;
 
     public double calculateAverageGrade() {
-        return -1;
+        return modules.stream().mapToDouble(ModuleEntity::getGrade).average().orElseThrow(() -> new IllegalStateException("Nenhum módulo encontrado"));
     }
 
 }

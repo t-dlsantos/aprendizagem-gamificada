@@ -25,8 +25,6 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class FinalizeCourseUseCaseTest {
     @Mock
-    private CourseRepository courseRepository;
-    @Mock
     private StudentRepository studentRepository;
     @Mock
     private EnrollmentRepository enrollmentRepository;

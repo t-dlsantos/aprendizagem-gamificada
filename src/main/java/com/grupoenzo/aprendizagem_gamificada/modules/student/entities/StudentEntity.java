@@ -31,10 +31,4 @@ public class StudentEntity {
         this.tickets = this.tickets + quantity;
     }
 
-    public boolean useTicket() {
-        if (this.tickets <= 0) return false;
-        this.tickets--;
-        return true;
-    }
-
 }
