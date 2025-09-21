@@ -28,6 +28,8 @@
 	</scm>
 	<properties>
 		<java.version>21</java.version>
+		<cucumber.version>7.23.0</cucumber.version>
+		<cucumber.reporting.version>5.8.0</cucumber.reporting.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -58,6 +60,24 @@
             <artifactId>h2</artifactId>
             <scope>runtime</scope>
         </dependency>
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-java</artifactId>
+			<version>${cucumber.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-junit-platform-engine</artifactId>
+			<version>${cucumber.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-spring</artifactId>
+			<version>${cucumber.version}</version>
+			<scope>test</scope>
+		</dependency>
     </dependencies>
 	<build>
 		<plugins>
@@ -65,6 +85,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
@@ -91,7 +112,56 @@
                 </executions>
             </plugin>
 
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>3.2.5</version>
+				<configuration>
+					<includes>
+						<include>**/*Test.java</include>
+						<include>**/*Tests.java</include>
+						<include>**/*TestCase.java</include>
+						<include>**/CucumberSuite.java</include>
+					</includes>
+					<configurationParameters>
+						cucumber.glue=com.example.subscription
+						cucumber.plugin=pretty, summary, json:target/cucumber/cucumber.json, html:target/cucumber/cucumber.html
+					</configurationParameters>
+				</configuration>
+			</plugin>
+
 		</plugins>
 	</build>
+
+	<profiles>
+		<profile>
+			<id>bdd-report</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>net.masterthought</groupId>
+						<artifactId>maven-cucumber-reporting</artifactId>
+						<version>5.8.0</version>
+						<executions>
+							<execution>
+								<id>cucumber-reports</id>
+								<phase>verify</phase>
+								<goals><goal>generate</goal></goals>
+								<configuration>
+									<projectName>subscription-bdd</projectName>
+									<outputDirectory>${project.build.directory}/cucumber-report-html</outputDirectory>
+									<jsonFiles>
+										<param>${project.build.directory}/cucumber/cucumber.json</param>
+									</jsonFiles>
+
+									<checkBuildResult>false</checkBuildResult>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 
 </project>
