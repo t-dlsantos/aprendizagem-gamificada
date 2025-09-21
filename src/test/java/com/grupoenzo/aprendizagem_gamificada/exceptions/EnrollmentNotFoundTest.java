@@ -1,4 +1,4 @@
-package com.grupoenzo.apendizagem_gameficada.exceptions;
+package com.grupoenzo.aprendizagem_gamificada.exceptions;
 
 import com.grupoenzo.aprendizagem_gamificada.exceptions.EnrollmentNotFound;
 import org.junit.jupiter.api.Test;
