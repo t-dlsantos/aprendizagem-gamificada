@@ -11,7 +11,7 @@ import org.junit.platform.suite.api.Suite;
 @Suite
 @IncludeEngines("cucumber")
 @SelectClasspathResource("features")
-@ConfigurationParameter(key = GLUE_PROPERTY_NAME, value = "com.example.subscription")
+@ConfigurationParameter(key = GLUE_PROPERTY_NAME, value = "com.grupoenzo.aprendizagem_gamificada.bdd")
 @ConfigurationParameter(
   key = PLUGIN_PROPERTY_NAME,
   value = "pretty, summary, json:target/cucumber/cucumber.json, html:target/cucumber/cucumber.html"
