@@ -1,4 +1,4 @@
-package com.grupoenzo.apendizagem_gameficada.modules.course.entities;
+package com.grupoenzo.aprendizagem_gamificada.modules.course.entities;
 
 import com.grupoenzo.aprendizagem_gamificada.modules.course.entities.CourseEntity;
 import com.grupoenzo.aprendizagem_gamificada.modules.course.entities.ModuleEntity;
@@ -22,16 +22,16 @@ public class CourseEntityTest {
     }
 
     @Test
-    public void shouldReturnAvarageGradeCorrectly() {
+    public void shouldReturnAverageGradeCorrectly() {
         course.setModules(Arrays.asList(
                 ModuleEntity.builder().description("Module 1").grade(7).build(),
                 ModuleEntity.builder().description("Module 2").grade(5).build(),
                 ModuleEntity.builder().description("Module 3").grade(9).build()
         ));
 
-        double avarege = course.calculateAverageGrade();
+        double average = course.calculateAverageGrade();
 
-        assertEquals(7, avarege);
+        assertEquals(7, average);
     }
 
     @Test
