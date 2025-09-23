@@ -30,8 +30,4 @@ public class CourseEntity {
     @OneToMany(mappedBy = "course")
     private List<ModuleEntity> modules;
 
-    public double calculateAverageGrade() {
-        return modules.stream().mapToDouble(ModuleEntity::getGrade).average().orElseThrow(() -> new IllegalStateException("Nenhum módulo encontrado"));
-    }
-
 }

@@ -1,7 +1,6 @@
 package com.grupoenzo.aprendizagem_gamificada.modules.enrollment.useCases;
 
-import com.grupoenzo.aprendizagem_gamificada.exceptions.EnrollmentNotFound;
-import com.grupoenzo.aprendizagem_gamificada.modules.course.entities.CourseEntity;
+import com.grupoenzo.aprendizagem_gamificada.exceptions.EnrollmentNotFoundException;
 import com.grupoenzo.aprendizagem_gamificada.modules.enrollment.entities.EnrollmentEntity;
 import com.grupoenzo.aprendizagem_gamificada.modules.enrollment.repositories.EnrollmentRepository;
 import com.grupoenzo.aprendizagem_gamificada.modules.student.entities.StudentEntity;
@@ -26,12 +25,11 @@ public class FinalizeCourseUseCase {
     public EnrollmentEntity execute(UUID idStudent, UUID idCourse) {
         EnrollmentEntity enrollment = enrollmentRepository
                 .findByStudentIdAndCourseId(idStudent, idCourse)
-                .orElseThrow(EnrollmentNotFound::new);
+                .orElseThrow(EnrollmentNotFoundException::new);
 
         StudentEntity student = enrollment.getStudent();
-        CourseEntity course = enrollment.getCourse();
 
-        double averageGrade = course.calculateAverageGrade();
+        double averageGrade = enrollment.calculateAverageGrade();
 
         if (averageGrade >= 7) {
             student.addTickets(3);

@@ -1,9 +1,11 @@
 package com.grupoenzo.aprendizagem_gamificada.modules.enrollment.useCases;
 
+import com.grupoenzo.aprendizagem_gamificada.exceptions.EnrollmentNotFoundException;
+import com.grupoenzo.aprendizagem_gamificada.exceptions.InsufficientCoursesCompletedException;
 import com.grupoenzo.aprendizagem_gamificada.modules.course.entities.CourseEntity;
 import com.grupoenzo.aprendizagem_gamificada.modules.course.entities.ModuleEntity;
-import com.grupoenzo.aprendizagem_gamificada.modules.course.repositories.CourseRepository;
 import com.grupoenzo.aprendizagem_gamificada.modules.enrollment.entities.EnrollmentEntity;
+import com.grupoenzo.aprendizagem_gamificada.modules.enrollment.entities.ModuleGradeEntity;
 import com.grupoenzo.aprendizagem_gamificada.modules.enrollment.repositories.EnrollmentRepository;
 import com.grupoenzo.aprendizagem_gamificada.modules.student.entities.StudentEntity;
 import com.grupoenzo.aprendizagem_gamificada.modules.student.repositories.StudentRepository;
@@ -15,11 +17,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -39,16 +40,27 @@ public class FinalizeCourseUseCaseTest {
     @BeforeEach
     public void setup() {
         this.student = StudentEntity.builder().id(UUID.randomUUID()).name("Thiago").tickets(0).build();
-        this.module = ModuleEntity.builder().build();
         this.course = CourseEntity.builder().id(UUID.randomUUID()).name("DevOps").description("A course to master DevOps").build();
-        this.enrollment = EnrollmentEntity.builder().course(course).student(student).build();
+        this.module = ModuleEntity.builder()
+                .id(UUID.randomUUID())
+                .name("Module 1")
+                .description("Unit tests")
+                .course(course)
+                .build();
+        this.course.setModules(List.of(module));
+        this.enrollment = EnrollmentEntity.builder().id(UUID.randomUUID()).course(course).student(student).build();
     }
 
     @Test
     @DisplayName("Should release 3 more tickets when average grade equals to 7")
     public void shouldReleaseTicketsWhenAverageGradeIs7() {
-        module.setGrade(7);
-        course.setModules(List.of(module));
+        ModuleGradeEntity moduleGrade = ModuleGradeEntity.builder()
+                .student(student)
+                .module(module)
+                .enrollment(enrollment)
+                .grade(7.0)
+                .build();
+        enrollment.setModuleGrades(List.of(moduleGrade));
 
         when(enrollmentRepository.findByStudentIdAndCourseId(student.getId(), course.getId())).thenReturn(Optional.of(enrollment));
 
@@ -59,10 +71,15 @@ public class FinalizeCourseUseCaseTest {
     }
 
     @Test
-    @DisplayName("Should release 3 more tickets when average grande is above 7")
+    @DisplayName("Should release 3 more tickets when average grade is above 7")
     public void shouldReleaseTicketsWhenAverageGradeIsAbove7() {
-        module.setGrade(8);
-        course.setModules(List.of(module));
+        ModuleGradeEntity moduleGrade = ModuleGradeEntity.builder()
+                .student(student)
+                .module(module)
+                .enrollment(enrollment)
+                .grade(8.0)
+                .build();
+        enrollment.setModuleGrades(List.of(moduleGrade));
 
         when(enrollmentRepository.findByStudentIdAndCourseId(student.getId(), course.getId())).thenReturn(Optional.of(enrollment));
 
@@ -75,8 +92,13 @@ public class FinalizeCourseUseCaseTest {
     @Test
     @DisplayName("Should not release 3 more tickets when average grade is below 7")
     public void shouldNotReleaseTicketsWhenAverageGradeIsBelow7() {
-        module.setGrade(5);
-        course.setModules(List.of(module));
+        ModuleGradeEntity moduleGrade = ModuleGradeEntity.builder()
+                .student(student)
+                .module(module)
+                .enrollment(enrollment)
+                .grade(5.0)
+                .build();
+        enrollment.setModuleGrades(List.of(moduleGrade));
 
         when(enrollmentRepository.findByStudentIdAndCourseId(student.getId(), course.getId())).thenReturn(Optional.of(enrollment));
 
@@ -86,4 +108,9 @@ public class FinalizeCourseUseCaseTest {
         assertEquals(ticketsBefore, ticketsAfter);
     }
 
+    @Test
+    @DisplayName("Should throw EnrollmentNotFoundException when enrollment not found")
+    void shouldThrowEnrollmentNotFoundExceptionWhenEnrollmentNotFound() {
+        assertThrows(EnrollmentNotFoundException.class, () -> finalizeCourseUseCase.execute(student.getId(), course.getId()));
+    }
 }

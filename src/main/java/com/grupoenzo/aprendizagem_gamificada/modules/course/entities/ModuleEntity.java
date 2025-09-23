@@ -20,7 +20,6 @@ public class ModuleEntity {
     private UUID id;
     private String name;
     private String description;
-    private double grade;
 
     @ManyToOne
     @JoinColumn(name = "course_id")
