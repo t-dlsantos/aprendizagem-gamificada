@@ -5,6 +5,7 @@ import com.grupoenzo.aprendizagem_gamificada.bdd.World;
 import com.grupoenzo.aprendizagem_gamificada.modules.course.entities.CourseEntity;
 import com.grupoenzo.aprendizagem_gamificada.modules.course.entities.ModuleEntity;
 import com.grupoenzo.aprendizagem_gamificada.modules.enrollment.entities.EnrollmentEntity;
+import com.grupoenzo.aprendizagem_gamificada.modules.enrollment.entities.ModuleGradeEntity;
 import com.grupoenzo.aprendizagem_gamificada.modules.enrollment.repositories.EnrollmentRepository;
 import com.grupoenzo.aprendizagem_gamificada.modules.enrollment.useCases.FinalizeCourseUseCase;
 import com.grupoenzo.aprendizagem_gamificada.modules.student.entities.StudentEntity;
@@ -29,19 +30,36 @@ final class steps_support {
                 .build();
     }
 
-    static void courseWithGrade(World world, String courseName, int grade) {
-        world.module = ModuleEntity.builder().grade(grade).build();
+    static void courseWithGrade(World world, String courseName, double grade) {
         world.course = CourseEntity.builder()
                 .id(UUID.randomUUID())
                 .name(courseName)
                 .description("Test course")
-                .modules(List.of(world.module))
                 .build();
 
+        world.module = ModuleEntity.builder()
+                .id(UUID.randomUUID())
+                .name("Module 1")
+                .description("Test module")
+                .course(world.course)
+                .build();
+                
+        world.course.setModules(List.of(world.module));
+
         world.enrollment = EnrollmentEntity.builder()
+                .id(UUID.randomUUID())
                 .course(world.course)
                 .student(world.student)
                 .build();
+
+        world.moduleGrade = ModuleGradeEntity.builder()
+                .student(world.student)
+                .module(world.module)
+                .enrollment(world.enrollment)
+                .grade(grade)
+                .build();
+        
+        world.enrollment.setModuleGrades(List.of(world.moduleGrade));
 
         world.enrollmentRepository = mock(EnrollmentRepository.class);
         when(world.enrollmentRepository.findByStudentIdAndCourseId(

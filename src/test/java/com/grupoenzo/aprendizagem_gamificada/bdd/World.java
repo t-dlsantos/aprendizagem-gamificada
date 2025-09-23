@@ -7,6 +7,7 @@ import com.grupoenzo.aprendizagem_gamificada.modules.enrollment.repositories.Enr
 import com.grupoenzo.aprendizagem_gamificada.modules.enrollment.useCases.FinalizeCourseUseCase;
 import com.grupoenzo.aprendizagem_gamificada.modules.student.entities.StudentEntity;
 import com.grupoenzo.aprendizagem_gamificada.modules.student.repositories.StudentRepository;
+import com.grupoenzo.aprendizagem_gamificada.modules.enrollment.entities.ModuleGradeEntity;
 import org.springframework.stereotype.Component;
 import io.cucumber.spring.ScenarioScope;
 
@@ -19,6 +20,7 @@ public class World {
     public CourseEntity course;
     public ModuleEntity module;
     public EnrollmentEntity enrollment;
+    public ModuleGradeEntity moduleGrade;
     public EnrollmentRepository enrollmentRepository;
     public StudentRepository studentRepository;
     public FinalizeCourseUseCase finalizeCourseUseCase;
