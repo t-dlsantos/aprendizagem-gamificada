@@ -1,4 +1,4 @@
-package com.grupoenzo.aprendizagem_gamificada.modules.course.entities;
+package com.grupoenzo.aprendizagem_gamificada.core.domain.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

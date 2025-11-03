@@ -5,6 +5,12 @@ Enzo Murat Aires de Alencar - 212189
 Ricardo Leporo Holtz - 212064  
 Thiago de Lima Santos - 223628
 
+### Arquitetura
+
+Utilizado Clean Architecture
+
+[Modelo utilizado como inspiração - Github eliostvs](https://github.dev/eliostvs/clean-architecture-delivery-example)
+
 ### Gestão de Branch
 1. Branch principal protegida
 

@@ -1,8 +1,6 @@
-package com.grupoenzo.aprendizagem_gamificada.modules.enrollment.entities;
+package com.grupoenzo.aprendizagem_gamificada.core.domain.entities;
 
 import com.grupoenzo.aprendizagem_gamificada.exceptions.InsufficientCoursesCompletedException;
-import com.grupoenzo.aprendizagem_gamificada.modules.course.entities.CourseEntity;
-import com.grupoenzo.aprendizagem_gamificada.modules.student.entities.StudentEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

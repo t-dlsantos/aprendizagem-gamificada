@@ -1,6 +1,6 @@
-package com.grupoenzo.aprendizagem_gamificada.modules.student.repositories;
+package com.grupoenzo.aprendizagem_gamificada.core.useCases.student;
 
-import com.grupoenzo.aprendizagem_gamificada.modules.student.entities.StudentEntity;
+import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.StudentEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;

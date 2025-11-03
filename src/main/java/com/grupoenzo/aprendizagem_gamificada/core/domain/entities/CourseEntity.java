@@ -1,6 +1,5 @@
-package com.grupoenzo.aprendizagem_gamificada.modules.student.entities;
+package com.grupoenzo.aprendizagem_gamificada.core.domain.entities;
 
-import com.grupoenzo.aprendizagem_gamificada.modules.enrollment.entities.EnrollmentEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,21 +13,20 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "student")
-public class StudentEntity {
+@Entity(name = "course")
+public class CourseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     private String name;
-    private int tickets;
+    private String description;
 
-    @OneToMany(mappedBy = "student")
+    @OneToMany(mappedBy = "course")
     private List<EnrollmentEntity> enrollments;
 
-    public void addTickets(int quantity) {
-        this.tickets = this.tickets + quantity;
-    }
+    @OneToMany(mappedBy = "course")
+    private List<ModuleEntity> modules;
 
 }

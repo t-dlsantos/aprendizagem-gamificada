@@ -1,9 +1,11 @@
 package com.grupoenzo.aprendizagem_gamificada.modules.course.entities;
 
+import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.CourseEntity;
+import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.ModuleEntity;
 import com.grupoenzo.aprendizagem_gamificada.exceptions.InsufficientCoursesCompletedException;
-import com.grupoenzo.aprendizagem_gamificada.modules.enrollment.entities.EnrollmentEntity;
-import com.grupoenzo.aprendizagem_gamificada.modules.enrollment.entities.ModuleGradeEntity;
-import com.grupoenzo.aprendizagem_gamificada.modules.student.entities.StudentEntity;
+import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.EnrollmentEntity;
+import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.ModuleGradeEntity;
+import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.StudentEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
