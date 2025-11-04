@@ -8,11 +8,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 import java.util.UUID;
 
-public interface ModuleGradeRepository extends JpaRepository<ModuleGradeEntity, UUID> {
-    
-    @Query("SELECT mg FROM module_grade mg WHERE mg.enrollment.id = :enrollmentId")
-    List<ModuleGradeEntity> findByEnrollmentId(@Param("enrollmentId") UUID enrollmentId);
-    
-    @Query("SELECT mg FROM module_grade mg WHERE mg.student.id = :studentId AND mg.module.id = :moduleId")
-    List<ModuleGradeEntity> findByStudentIdAndModuleId(@Param("studentId") UUID studentId, @Param("moduleId") UUID moduleId);
+public interface ModuleGradeRepository {
+    List<ModuleGradeEntity> findByEnrollmentId(UUID enrollmentId);
+    List<ModuleGradeEntity> findByStudentIdAndModuleId(UUID studentId, UUID moduleId);
 }

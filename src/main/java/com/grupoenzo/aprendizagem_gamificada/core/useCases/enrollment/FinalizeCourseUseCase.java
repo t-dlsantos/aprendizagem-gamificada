@@ -1,6 +1,6 @@
 package com.grupoenzo.aprendizagem_gamificada.core.useCases.enrollment;
 
-import com.grupoenzo.aprendizagem_gamificada.exceptions.EnrollmentNotFoundException;
+
 import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.EnrollmentEntity;
 import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.StudentEntity;
 import com.grupoenzo.aprendizagem_gamificada.core.useCases.student.StudentRepository;

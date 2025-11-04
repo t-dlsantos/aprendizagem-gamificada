@@ -8,8 +8,6 @@ import org.springframework.data.repository.query.Param;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface EnrollmentRepository extends JpaRepository<EnrollmentEntity, UUID> {
-    @Query("SELECT e FROM enrollment e WHERE e.student.id = :studentId AND e.course.id = :courseId")
-    Optional<EnrollmentEntity> findByStudentIdAndCourseId(@Param("studentId") UUID studentId,
-                                                          @Param("courseId") UUID courseId);
+public interface EnrollmentRepository {
+    Optional<EnrollmentEntity> findByStudentIdAndCourseId(UUID studentId, UUID courseId);
 }

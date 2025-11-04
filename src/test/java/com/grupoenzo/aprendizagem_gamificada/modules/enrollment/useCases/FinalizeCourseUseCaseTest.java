@@ -26,9 +26,9 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class FinalizeCourseUseCaseTest {
     @Mock
-    private StudentRepository studentRepository;
+    private StudentRepository StudentRepository;
     @Mock
-    private EnrollmentRepository enrollmentRepository;
+    private EnrollmentRepository EnrollmentRepository;
     @InjectMocks
     private FinalizeCourseUseCase finalizeCourseUseCase;
 
@@ -62,7 +62,7 @@ public class FinalizeCourseUseCaseTest {
                 .build();
         enrollment.setModuleGrades(List.of(moduleGrade));
 
-        when(enrollmentRepository.findByStudentIdAndCourseId(student.getId(), course.getId())).thenReturn(Optional.of(enrollment));
+        when(EnrollmentRepository.findByStudentIdAndCourseId(student.getId(), course.getId())).thenReturn(Optional.of(enrollment));
 
         var ticketsBefore = student.getTickets();
         var ticketsAfter = finalizeCourseUseCase.execute(student.getId(), course.getId()).getStudent().getTickets();
@@ -81,7 +81,7 @@ public class FinalizeCourseUseCaseTest {
                 .build();
         enrollment.setModuleGrades(List.of(moduleGrade));
 
-        when(enrollmentRepository.findByStudentIdAndCourseId(student.getId(), course.getId())).thenReturn(Optional.of(enrollment));
+        when(EnrollmentRepository.findByStudentIdAndCourseId(student.getId(), course.getId())).thenReturn(Optional.of(enrollment));
 
         var ticketsBefore = student.getTickets();
         var ticketsAfter = finalizeCourseUseCase.execute(student.getId(), course.getId()).getStudent().getTickets();
@@ -100,7 +100,7 @@ public class FinalizeCourseUseCaseTest {
                 .build();
         enrollment.setModuleGrades(List.of(moduleGrade));
 
-        when(enrollmentRepository.findByStudentIdAndCourseId(student.getId(), course.getId())).thenReturn(Optional.of(enrollment));
+        when(EnrollmentRepository.findByStudentIdAndCourseId(student.getId(), course.getId())).thenReturn(Optional.of(enrollment));
 
         var ticketsBefore = student.getTickets();
         var ticketsAfter = finalizeCourseUseCase.execute(student.getId(), course.getId()).getStudent().getTickets();

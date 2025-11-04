@@ -61,15 +61,15 @@ final class steps_support {
         
         world.enrollment.setModuleGrades(List.of(world.moduleGrade));
 
-        world.enrollmentRepository = mock(EnrollmentRepository.class);
-        when(world.enrollmentRepository.findByStudentIdAndCourseId(
+        world.EnrollmentRepository = mock(EnrollmentRepository.class);
+        when(world.EnrollmentRepository.findByStudentIdAndCourseId(
                 world.student.getId(),
                 world.course.getId()
         )).thenReturn(Optional.of(world.enrollment));
 
-        world.studentRepository = mock(StudentRepository.class);
-        when(world.studentRepository.save(world.student)).thenReturn(world.student);
+        world.StudentRepository = mock(StudentRepository.class);
+        when(world.StudentRepository.save(world.student)).thenReturn(world.student);
 
-        world.finalizeCourseUseCase = new FinalizeCourseUseCase(world.studentRepository, world.enrollmentRepository);
+        world.finalizeCourseUseCase = new FinalizeCourseUseCase(world.StudentRepository, world.EnrollmentRepository);
     }
 }

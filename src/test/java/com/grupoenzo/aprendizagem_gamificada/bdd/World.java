@@ -21,8 +21,8 @@ public class World {
     public ModuleEntity module;
     public EnrollmentEntity enrollment;
     public ModuleGradeEntity moduleGrade;
-    public EnrollmentRepository enrollmentRepository;
-    public StudentRepository studentRepository;
+    public EnrollmentRepository EnrollmentRepository;
+    public StudentRepository StudentRepository;
     public FinalizeCourseUseCase finalizeCourseUseCase;
     public int ticketsBefore;
 }
