@@ -1,7 +1,7 @@
 package com.grupoenzo.aprendizagem_gamificada.infra.repositories;
 
 import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.ModuleGrade;
-import com.grupoenzo.aprendizagem_gamificada.core.usecases.enrollment.ModuleGradeRepository;
+import com.grupoenzo.aprendizagem_gamificada.core.usecases.enrollment.repositories.ModuleGradeRepository;
 import com.grupoenzo.aprendizagem_gamificada.infra.repositories.jpa.JpaModuleGradeRepository;
 
 import java.util.List;

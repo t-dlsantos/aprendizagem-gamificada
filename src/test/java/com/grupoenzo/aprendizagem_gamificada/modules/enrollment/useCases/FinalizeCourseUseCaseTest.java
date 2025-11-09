@@ -1,14 +1,15 @@
 package com.grupoenzo.aprendizagem_gamificada.modules.enrollment.useCases;
 
 import com.grupoenzo.aprendizagem_gamificada.core.usecases.enrollment.FinalizeCourseUseCase;
+import com.grupoenzo.aprendizagem_gamificada.core.usecases.enrollment.repositories.EnrollmentRepository;
+import com.grupoenzo.aprendizagem_gamificada.core.usecases.student.repositories.StudentRepository;
 import com.grupoenzo.aprendizagem_gamificada.exceptions.EnrollmentNotFoundException;
 import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.CourseEntity;
 import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.Module;
 import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.Enrollment;
 import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.ModuleGrade;
-import com.grupoenzo.aprendizagem_gamificada.core.usecases.enrollment.EnrollmentRepository;
 import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.Student;
-import com.grupoenzo.aprendizagem_gamificada.core.usecases.student.StudentRepository;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,7 +1,7 @@
 package com.grupoenzo.aprendizagem_gamificada.infra.repositories;
 
 import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.Enrollment;
-import com.grupoenzo.aprendizagem_gamificada.core.usecases.enrollment.EnrollmentRepository;
+import com.grupoenzo.aprendizagem_gamificada.core.usecases.enrollment.repositories.EnrollmentRepository;
 import com.grupoenzo.aprendizagem_gamificada.infra.repositories.jpa.JpaEnrollmentRepository;
 
 import java.util.Optional;

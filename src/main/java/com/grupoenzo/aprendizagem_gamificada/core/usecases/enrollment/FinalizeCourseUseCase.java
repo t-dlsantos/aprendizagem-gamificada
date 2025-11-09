@@ -3,19 +3,20 @@ package com.grupoenzo.aprendizagem_gamificada.core.usecases.enrollment;
 
 import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.Enrollment;
 import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.Student;
-import com.grupoenzo.aprendizagem_gamificada.core.usecases.student.StudentRepository;
+import com.grupoenzo.aprendizagem_gamificada.core.usecases.enrollment.repositories.EnrollmentRepository;
+import com.grupoenzo.aprendizagem_gamificada.core.usecases.student.repositories.StudentRepository;
+import com.grupoenzo.aprendizagem_gamificada.exceptions.EnrollmentNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
-@Service
 public class FinalizeCourseUseCase {
 
     private final StudentRepository studentRepository;
     private final EnrollmentRepository enrollmentRepository;
 
-    @Autowired
     public FinalizeCourseUseCase(StudentRepository studentRepository, EnrollmentRepository enrollmentRepository) {
         this.studentRepository = studentRepository;
         this.enrollmentRepository = enrollmentRepository;

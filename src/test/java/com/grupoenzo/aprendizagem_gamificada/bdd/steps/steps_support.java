@@ -6,10 +6,10 @@ import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.CourseEntity;
 import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.Module;
 import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.Enrollment;
 import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.ModuleGrade;
-import com.grupoenzo.aprendizagem_gamificada.core.usecases.enrollment.EnrollmentRepository;
 import com.grupoenzo.aprendizagem_gamificada.core.usecases.enrollment.FinalizeCourseUseCase;
+import com.grupoenzo.aprendizagem_gamificada.core.usecases.enrollment.repositories.EnrollmentRepository;
+import com.grupoenzo.aprendizagem_gamificada.core.usecases.student.repositories.StudentRepository;
 import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.Student;
-import com.grupoenzo.aprendizagem_gamificada.core.usecases.student.StudentRepository;
 
 import java.util.List;
 import java.util.Optional;

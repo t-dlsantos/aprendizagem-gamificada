@@ -1,4 +1,4 @@
-package com.grupoenzo.aprendizagem_gamificada.core.usecases.enrollment;
+package com.grupoenzo.aprendizagem_gamificada.core.usecases.enrollment.repositories;
 
 import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.Enrollment;
 
