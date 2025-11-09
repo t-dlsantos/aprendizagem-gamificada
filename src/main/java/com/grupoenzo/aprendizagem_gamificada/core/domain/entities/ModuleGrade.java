@@ -3,8 +3,9 @@ package com.grupoenzo.aprendizagem_gamificada.core.domain.entities;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public class ModuleGrade {
-    private final UUID id;
+import com.grupoenzo.aprendizagem_gamificada.core.domain.abstracts.Entity;
+
+public class ModuleGrade extends Entity {
     private Module module;
     private Student student;
     private Enrollment enrollment;
@@ -17,6 +18,7 @@ public class ModuleGrade {
         this.student = student;
         this.enrollment = enrollment;
         this.grade = 0;
+        this.createdAt = LocalDateTime.now();
         this.completedAt = LocalDateTime.now();
     }
 

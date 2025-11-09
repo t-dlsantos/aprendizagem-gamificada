@@ -1,10 +1,12 @@
 package com.grupoenzo.aprendizagem_gamificada.core.domain.entities;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-public class Student {
-    private final UUID id;
+import com.grupoenzo.aprendizagem_gamificada.core.domain.abstracts.Entity;
+
+public class Student extends Entity {
     private String name;
     private int tickets;
     private List<Enrollment> enrollments;
@@ -13,6 +15,7 @@ public class Student {
         this.id = id;
         this.name = name;
         this.tickets = tickets;
+        this.createdAt = LocalDateTime.now();
     }
 
     public UUID getId() {

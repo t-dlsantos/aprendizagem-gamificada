@@ -3,8 +3,9 @@ package com.grupoenzo.aprendizagem_gamificada.core.domain.entities;
 import java.util.List;
 import java.util.UUID;
 
-public class Course {
-    private final UUID id;
+import com.grupoenzo.aprendizagem_gamificada.core.domain.abstracts.Entity;
+
+public class Course extends Entity {
     private String name;
     private String description;
     private List<Enrollment> enrollments;

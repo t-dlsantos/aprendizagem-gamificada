@@ -1,9 +1,11 @@
 package com.grupoenzo.aprendizagem_gamificada.core.domain.entities;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
-public class Module {
-    private UUID id;
+import com.grupoenzo.aprendizagem_gamificada.core.domain.abstracts.Entity;
+
+public class Module extends Entity {
     private String name;
     private String description;
     private Course course;
@@ -13,6 +15,7 @@ public class Module {
         this.name = name;
         this.description = description;
         this.course = course;
+        this.createdAt = LocalDateTime.now();
     }
 
     public UUID getId() {
