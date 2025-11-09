@@ -1,7 +1,7 @@
 package com.grupoenzo.aprendizagem_gamificada.infra.repositories;
 
-import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.EnrollmentEntity;
-import com.grupoenzo.aprendizagem_gamificada.core.useCases.enrollment.EnrollmentRepository;
+import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.Enrollment;
+import com.grupoenzo.aprendizagem_gamificada.core.usecases.enrollment.EnrollmentRepository;
 import com.grupoenzo.aprendizagem_gamificada.infra.repositories.jpa.JpaEnrollmentRepository;
 
 import java.util.Optional;
@@ -15,7 +15,7 @@ public class EnrollmentRepositoryImpl implements EnrollmentRepository {
     }
 
     @Override
-    public Optional<EnrollmentEntity> findByStudentIdAndCourseId(UUID studentId, UUID courseId) {
+    public Optional<Enrollment> findByStudentIdAndCourseId(UUID studentId, UUID courseId) {
         return jpaRepository.findByStudentIdAndCourseId(studentId, courseId)
                 .map(this::toDomain);
     }

@@ -1,11 +1,11 @@
 package com.grupoenzo.aprendizagem_gamificada.modules.course.entities;
 
 import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.CourseEntity;
-import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.ModuleEntity;
+import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.Module;
 import com.grupoenzo.aprendizagem_gamificada.exceptions.InsufficientCoursesCompletedException;
-import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.EnrollmentEntity;
-import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.ModuleGradeEntity;
-import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.StudentEntity;
+import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.Enrollment;
+import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.ModuleGrade;
+import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.Student;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,26 +15,26 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class EnrollmentEntityTest {
+public class EnrollmentTest {
 
-    private StudentEntity student;
+    private Student student;
     private CourseEntity course;
-    private ModuleEntity module;
-    private EnrollmentEntity enrollment;
+    private Module module;
+    private Enrollment enrollment;
 
     @BeforeEach
     void setup() {
-        student = StudentEntity.builder().id(UUID.randomUUID()).name("Thiago").tickets(0).build();
+        student = Student.builder().id(UUID.randomUUID()).name("Thiago").tickets(0).build();
         course = CourseEntity.builder().id(UUID.randomUUID()).name("DevOps").description("A course to master DevOps").build();
-        module = ModuleEntity.builder().id(UUID.randomUUID()).name("Module 1").description("Unit tests").course(course).build();
+        module = Module.builder().id(UUID.randomUUID()).name("Module 1").description("Unit tests").course(course).build();
         course.setModules(List.of(module));
-        enrollment = EnrollmentEntity.builder().id(UUID.randomUUID()).course(course).student(student).build();
+        enrollment = Enrollment.builder().id(UUID.randomUUID()).course(course).student(student).build();
     }
 
     @Test
     @DisplayName("Should calculate average grade correctly with one module")
     void shouldCalculateAverageGrade() {
-        ModuleGradeEntity moduleGrade = ModuleGradeEntity.builder()
+        ModuleGrade moduleGrade = ModuleGrade.builder()
                 .student(student)
                 .module(module)
                 .enrollment(enrollment)
@@ -70,11 +70,11 @@ public class EnrollmentEntityTest {
     @Test
     @DisplayName("Should calculate average grade correctly with multiple modules")
     void shouldCalculateAverageGradeWithMultipleModules() {
-        ModuleEntity module2 = ModuleEntity.builder().id(UUID.randomUUID()).name("Module 2").course(course).build();
+        Module module2 = Module.builder().id(UUID.randomUUID()).name("Module 2").course(course).build();
         course.setModules(List.of(module, module2));
 
-        ModuleGradeEntity grade1 = ModuleGradeEntity.builder().student(student).module(module).enrollment(enrollment).grade(6.0).build();
-        ModuleGradeEntity grade2 = ModuleGradeEntity.builder().student(student).module(module2).enrollment(enrollment).grade(8.0).build();
+        ModuleGrade grade1 = ModuleGrade.builder().student(student).module(module).enrollment(enrollment).grade(6.0).build();
+        ModuleGrade grade2 = ModuleGrade.builder().student(student).module(module2).enrollment(enrollment).grade(8.0).build();
         enrollment.setModuleGrades(List.of(grade1, grade2));
 
         double average = enrollment.calculateAverageGrade();
@@ -84,14 +84,14 @@ public class EnrollmentEntityTest {
     @Test
     @DisplayName("Should throw InsufficientCoursesCompletedException when moduleGrades.size() is different from course.modules.size()")
     void shouldThrowWhenModuleGradesSizeDoesNotMatchCourseModules() {
-        ModuleEntity module2 = ModuleEntity.builder()
+        Module module2 = Module.builder()
                 .id(UUID.randomUUID())
                 .name("Module 2")
                 .course(course)
                 .build();
         course.setModules(List.of(module, module2));
 
-        ModuleGradeEntity grade1 = ModuleGradeEntity.builder()
+        ModuleGrade grade1 = ModuleGrade.builder()
                 .student(student)
                 .module(module)
                 .enrollment(enrollment)

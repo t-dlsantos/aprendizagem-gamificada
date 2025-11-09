@@ -3,13 +3,13 @@ package com.grupoenzo.aprendizagem_gamificada.bdd.steps;
 
 import com.grupoenzo.aprendizagem_gamificada.bdd.World;
 import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.CourseEntity;
-import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.ModuleEntity;
-import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.EnrollmentEntity;
-import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.ModuleGradeEntity;
-import com.grupoenzo.aprendizagem_gamificada.core.useCases.enrollment.EnrollmentRepository;
-import com.grupoenzo.aprendizagem_gamificada.core.useCases.enrollment.FinalizeCourseUseCase;
-import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.StudentEntity;
-import com.grupoenzo.aprendizagem_gamificada.core.useCases.student.StudentRepository;
+import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.Module;
+import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.Enrollment;
+import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.ModuleGrade;
+import com.grupoenzo.aprendizagem_gamificada.core.usecases.enrollment.EnrollmentRepository;
+import com.grupoenzo.aprendizagem_gamificada.core.usecases.enrollment.FinalizeCourseUseCase;
+import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.Student;
+import com.grupoenzo.aprendizagem_gamificada.core.usecases.student.StudentRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,7 +23,7 @@ final class steps_support {
     private steps_support() {}
 
     static void student(World world, String name, int tickets) {
-        world.student = StudentEntity.builder()
+        world.student = Student.builder()
                 .id(UUID.randomUUID())
                 .name(name)
                 .tickets(tickets)
@@ -37,7 +37,7 @@ final class steps_support {
                 .description("Test course")
                 .build();
 
-        world.module = ModuleEntity.builder()
+        world.module = Module.builder()
                 .id(UUID.randomUUID())
                 .name("Module 1")
                 .description("Test module")
@@ -46,13 +46,13 @@ final class steps_support {
                 
         world.course.setModules(List.of(world.module));
 
-        world.enrollment = EnrollmentEntity.builder()
+        world.enrollment = Enrollment.builder()
                 .id(UUID.randomUUID())
                 .course(world.course)
                 .student(world.student)
                 .build();
 
-        world.moduleGrade = ModuleGradeEntity.builder()
+        world.moduleGrade = ModuleGrade.builder()
                 .student(world.student)
                 .module(world.module)
                 .enrollment(world.enrollment)

@@ -1,8 +1,7 @@
 package com.grupoenzo.aprendizagem_gamificada.infra.repositories;
 
-import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.EnrollmentEntity;
-import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.ModuleGradeEntity;
-import com.grupoenzo.aprendizagem_gamificada.core.useCases.enrollment.ModuleGradeRepository;
+import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.ModuleGrade;
+import com.grupoenzo.aprendizagem_gamificada.core.usecases.enrollment.ModuleGradeRepository;
 import com.grupoenzo.aprendizagem_gamificada.infra.repositories.jpa.JpaModuleGradeRepository;
 
 import java.util.List;
@@ -16,13 +15,13 @@ public class ModuleGradeRepositoryImpl implements ModuleGradeRepository {
     }
 
     @Override
-    public List<ModuleGradeEntity> findByEnrollmentId(UUID enrollmentId) {
+    public List<ModuleGrade> findByEnrollmentId(UUID enrollmentId) {
         return jpaRepository.findByEnrollmentId(enrollmentId)
                 .map(this::toDomain);
     }
 
     @Override
-    public List<ModuleGradeEntity> findByStudentIdAndModuleId(UUID studentId, UUID moduleId) {
+    public List<ModuleGrade> findByStudentIdAndModuleId(UUID studentId, UUID moduleId) {
         return jpaRepository.findByStudentIdAndModuleId(studentId, moduleId)
                 .map(this::toDomain);
     }

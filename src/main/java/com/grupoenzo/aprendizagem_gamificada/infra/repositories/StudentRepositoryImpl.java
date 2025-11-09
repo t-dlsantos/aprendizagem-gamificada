@@ -1,7 +1,7 @@
 package com.grupoenzo.aprendizagem_gamificada.infra.repositories;
 
-import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.StudentEntity;
-import com.grupoenzo.aprendizagem_gamificada.core.useCases.student.StudentRepository;
+import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.Student;
+import com.grupoenzo.aprendizagem_gamificada.core.usecases.student.StudentRepository;
 
 public class StudentRepositoryImpl implements StudentRepository {
     private final StudentRepository studentRepository;
@@ -11,7 +11,7 @@ public class StudentRepositoryImpl implements StudentRepository {
     }
 
     @Override
-    public StudentEntity save(StudentEntity studentEntity) {
-        return studentRepository.save(studentEntity);
+    public Student save(Student student) {
+        return studentRepository.save(student);
     }
 }

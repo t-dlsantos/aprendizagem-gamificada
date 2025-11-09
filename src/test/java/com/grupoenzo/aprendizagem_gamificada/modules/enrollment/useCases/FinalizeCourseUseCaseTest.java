@@ -1,14 +1,14 @@
 package com.grupoenzo.aprendizagem_gamificada.modules.enrollment.useCases;
 
-import com.grupoenzo.aprendizagem_gamificada.core.useCases.enrollment.FinalizeCourseUseCase;
+import com.grupoenzo.aprendizagem_gamificada.core.usecases.enrollment.FinalizeCourseUseCase;
 import com.grupoenzo.aprendizagem_gamificada.exceptions.EnrollmentNotFoundException;
 import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.CourseEntity;
-import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.ModuleEntity;
-import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.EnrollmentEntity;
-import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.ModuleGradeEntity;
-import com.grupoenzo.aprendizagem_gamificada.core.useCases.enrollment.EnrollmentRepository;
-import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.StudentEntity;
-import com.grupoenzo.aprendizagem_gamificada.core.useCases.student.StudentRepository;
+import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.Module;
+import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.Enrollment;
+import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.ModuleGrade;
+import com.grupoenzo.aprendizagem_gamificada.core.usecases.enrollment.EnrollmentRepository;
+import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.Student;
+import com.grupoenzo.aprendizagem_gamificada.core.usecases.student.StudentRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -32,29 +32,29 @@ public class FinalizeCourseUseCaseTest {
     @InjectMocks
     private FinalizeCourseUseCase finalizeCourseUseCase;
 
-    private StudentEntity student;
+    private Student student;
     private CourseEntity course;
-    private ModuleEntity module;
-    private EnrollmentEntity enrollment;
+    private Module module;
+    private Enrollment enrollment;
 
     @BeforeEach
     public void setup() {
-        this.student = StudentEntity.builder().id(UUID.randomUUID()).name("Thiago").tickets(0).build();
+        this.student = Student.builder().id(UUID.randomUUID()).name("Thiago").tickets(0).build();
         this.course = CourseEntity.builder().id(UUID.randomUUID()).name("DevOps").description("A course to master DevOps").build();
-        this.module = ModuleEntity.builder()
+        this.module = Module.builder()
                 .id(UUID.randomUUID())
                 .name("Module 1")
                 .description("Unit tests")
                 .course(course)
                 .build();
         this.course.setModules(List.of(module));
-        this.enrollment = EnrollmentEntity.builder().id(UUID.randomUUID()).course(course).student(student).build();
+        this.enrollment = Enrollment.builder().id(UUID.randomUUID()).course(course).student(student).build();
     }
 
     @Test
     @DisplayName("Should release 3 more tickets when average grade equals to 7")
     public void shouldReleaseTicketsWhenAverageGradeIs7() {
-        ModuleGradeEntity moduleGrade = ModuleGradeEntity.builder()
+        ModuleGrade moduleGrade = ModuleGrade.builder()
                 .student(student)
                 .module(module)
                 .enrollment(enrollment)
@@ -73,7 +73,7 @@ public class FinalizeCourseUseCaseTest {
     @Test
     @DisplayName("Should release 3 more tickets when average grade is above 7")
     public void shouldReleaseTicketsWhenAverageGradeIsAbove7() {
-        ModuleGradeEntity moduleGrade = ModuleGradeEntity.builder()
+        ModuleGrade moduleGrade = ModuleGrade.builder()
                 .student(student)
                 .module(module)
                 .enrollment(enrollment)
@@ -92,7 +92,7 @@ public class FinalizeCourseUseCaseTest {
     @Test
     @DisplayName("Should not release 3 more tickets when average grade is below 7")
     public void shouldNotReleaseTicketsWhenAverageGradeIsBelow7() {
-        ModuleGradeEntity moduleGrade = ModuleGradeEntity.builder()
+        ModuleGrade moduleGrade = ModuleGrade.builder()
                 .student(student)
                 .module(module)
                 .enrollment(enrollment)

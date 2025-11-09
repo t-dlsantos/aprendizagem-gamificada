@@ -1,9 +1,9 @@
-package com.grupoenzo.aprendizagem_gamificada.core.useCases.enrollment;
+package com.grupoenzo.aprendizagem_gamificada.core.usecases.enrollment;
 
 
-import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.EnrollmentEntity;
-import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.StudentEntity;
-import com.grupoenzo.aprendizagem_gamificada.core.useCases.student.StudentRepository;
+import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.Enrollment;
+import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.Student;
+import com.grupoenzo.aprendizagem_gamificada.core.usecases.student.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,12 +21,12 @@ public class FinalizeCourseUseCase {
         this.enrollmentRepository = enrollmentRepository;
     }
 
-    public EnrollmentEntity execute(UUID idStudent, UUID idCourse) {
-        EnrollmentEntity enrollment = enrollmentRepository
+    public Enrollment execute(UUID idStudent, UUID idCourse) {
+        Enrollment enrollment = enrollmentRepository
                 .findByStudentIdAndCourseId(idStudent, idCourse)
                 .orElseThrow(EnrollmentNotFoundException::new);
 
-        StudentEntity student = enrollment.getStudent();
+        Student student = enrollment.getStudent();
 
         double averageGrade = enrollment.calculateAverageGrade();
 

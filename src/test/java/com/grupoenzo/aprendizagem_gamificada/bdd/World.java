@@ -1,13 +1,13 @@
 package com.grupoenzo.aprendizagem_gamificada.bdd;
 
 import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.CourseEntity;
-import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.ModuleEntity;
-import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.EnrollmentEntity;
-import com.grupoenzo.aprendizagem_gamificada.core.useCases.enrollment.EnrollmentRepository;
-import com.grupoenzo.aprendizagem_gamificada.core.useCases.enrollment.FinalizeCourseUseCase;
-import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.StudentEntity;
-import com.grupoenzo.aprendizagem_gamificada.core.useCases.student.StudentRepository;
-import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.ModuleGradeEntity;
+import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.Module;
+import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.Enrollment;
+import com.grupoenzo.aprendizagem_gamificada.core.usecases.enrollment.EnrollmentRepository;
+import com.grupoenzo.aprendizagem_gamificada.core.usecases.enrollment.FinalizeCourseUseCase;
+import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.Student;
+import com.grupoenzo.aprendizagem_gamificada.core.usecases.student.StudentRepository;
+import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.ModuleGrade;
 import org.springframework.stereotype.Component;
 import io.cucumber.spring.ScenarioScope;
 
@@ -16,11 +16,11 @@ import io.cucumber.spring.ScenarioScope;
 @ScenarioScope
 
 public class World {
-    public StudentEntity student;
+    public Student student;
     public CourseEntity course;
-    public ModuleEntity module;
-    public EnrollmentEntity enrollment;
-    public ModuleGradeEntity moduleGrade;
+    public Module module;
+    public Enrollment enrollment;
+    public ModuleGrade moduleGrade;
     public EnrollmentRepository EnrollmentRepository;
     public StudentRepository StudentRepository;
     public FinalizeCourseUseCase finalizeCourseUseCase;
