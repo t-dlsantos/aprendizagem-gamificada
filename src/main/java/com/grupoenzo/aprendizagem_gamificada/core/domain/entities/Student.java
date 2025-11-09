@@ -5,16 +5,17 @@ import java.util.List;
 import java.util.UUID;
 
 import com.grupoenzo.aprendizagem_gamificada.core.domain.abstracts.Entity;
+import com.grupoenzo.aprendizagem_gamificada.core.domain.valueobjects.Ticket;
 
 public class Student extends Entity {
     private String name;
-    private int tickets;
+    private Ticket ticket;
     private List<Enrollment> enrollments;
 
-    public Student(UUID id, String name, int tickets) {
+    public Student(UUID id, String name, Ticket ticket) {
         this.id = id;
         this.name = name;
-        this.tickets = tickets;
+        this.ticket = ticket;
         this.createdAt = LocalDateTime.now();
     }
 
@@ -30,12 +31,12 @@ public class Student extends Entity {
         this.name = name;
     }
 
-    public int getTickets() {
-        return tickets;
+    public Ticket getTicket() {
+        return ticket;
     }
 
-    public void setTickets(int tickets) {
-        this.tickets = tickets;
+    public void setTicket(Ticket ticket) {
+        this.ticket = ticket;
     }
 
     public List<Enrollment> getEnrollments() {
@@ -47,7 +48,8 @@ public class Student extends Entity {
     }
 
     public void addTickets(int quantity) {
-        this.tickets = this.tickets + quantity;
+        int currentValue = this.ticket.getValue();
+        this.ticket = new Ticket(currentValue + quantity);
     }
 
 }
