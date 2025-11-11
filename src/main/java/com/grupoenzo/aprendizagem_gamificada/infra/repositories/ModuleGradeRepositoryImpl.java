@@ -3,10 +3,12 @@ package com.grupoenzo.aprendizagem_gamificada.infra.repositories;
 import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.ModuleGrade;
 import com.grupoenzo.aprendizagem_gamificada.core.usecases.enrollment.repositories.ModuleGradeRepository;
 import com.grupoenzo.aprendizagem_gamificada.infra.repositories.jpa.JpaModuleGradeRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.UUID;
 
+@Repository
 public class ModuleGradeRepositoryImpl implements ModuleGradeRepository {
     private final JpaModuleGradeRepository jpaRepository;
 
