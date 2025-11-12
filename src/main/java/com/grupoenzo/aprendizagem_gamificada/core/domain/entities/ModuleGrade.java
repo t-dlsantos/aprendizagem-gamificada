@@ -12,12 +12,12 @@ public class ModuleGrade extends Entity {
     private double grade;
     private LocalDateTime completedAt;
 
-    public ModuleGrade(UUID id, Module module, Student student, Enrollment enrollment) {
+    public ModuleGrade(UUID id, Module module, Student student, Enrollment enrollment, double grade) {
         this.id = id;
         this.module = module;
         this.student = student;
         this.enrollment = enrollment;
-        this.grade = 0;
+        this.grade = grade;
         this.createdAt = LocalDateTime.now();
         this.completedAt = LocalDateTime.now();
     }

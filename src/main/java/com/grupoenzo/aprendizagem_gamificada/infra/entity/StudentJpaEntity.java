@@ -4,27 +4,21 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
+import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.grupoenzo.aprendizagem_gamificada.core.domain.valueobjects.Ticket;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Entity(name = "student")
 public class StudentJpaEntity {
     @Id
@@ -32,6 +26,8 @@ public class StudentJpaEntity {
     private UUID id;
     
     private String name;
+
+    @Embedded
     private Ticket ticket;
 
     @OneToMany(mappedBy = "student")

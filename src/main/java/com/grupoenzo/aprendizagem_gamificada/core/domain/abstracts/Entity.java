@@ -6,4 +6,5 @@ import java.util.UUID;
 public abstract class Entity {
     protected UUID id;
     protected LocalDateTime createdAt;
+    protected LocalDateTime updatedAt;
 }

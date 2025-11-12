@@ -2,6 +2,7 @@ package com.grupoenzo.aprendizagem_gamificada.infra.repositories;
 
 import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.ModuleGrade;
 import com.grupoenzo.aprendizagem_gamificada.core.usecases.enrollment.repositories.ModuleGradeRepository;
+import com.grupoenzo.aprendizagem_gamificada.infra.mappers.ModuleGradeMapper;
 import com.grupoenzo.aprendizagem_gamificada.infra.repositories.jpa.JpaModuleGradeRepository;
 import org.springframework.stereotype.Repository;
 
@@ -11,20 +12,20 @@ import java.util.UUID;
 @Repository
 public class ModuleGradeRepositoryImpl implements ModuleGradeRepository {
     private final JpaModuleGradeRepository jpaRepository;
+    private final ModuleGradeMapper mapper;
 
-    public ModuleGradeRepositoryImpl(JpaModuleGradeRepository jpaRepository) {
+    public ModuleGradeRepositoryImpl(JpaModuleGradeRepository jpaRepository, ModuleGradeMapper mapper) {
         this.jpaRepository = jpaRepository;
+        this.mapper = mapper;
     }
 
     @Override
     public List<ModuleGrade> findByEnrollmentId(UUID enrollmentId) {
-        return jpaRepository.findByEnrollmentId(enrollmentId)
-                .map(this::toDomain);
+        return mapper.map(jpaRepository.findByEnrollmentId(enrollmentId));
     }
 
     @Override
     public List<ModuleGrade> findByStudentIdAndModuleId(UUID studentId, UUID moduleId) {
-        return jpaRepository.findByStudentIdAndModuleId(studentId, moduleId)
-                .map(this::toDomain);
+        return mapper.map(jpaRepository.findByStudentIdAndModuleId(studentId, moduleId));
     }
 }
