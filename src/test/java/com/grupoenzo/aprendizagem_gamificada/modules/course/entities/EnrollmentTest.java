@@ -2,7 +2,7 @@ package com.grupoenzo.aprendizagem_gamificada.modules.course.entities;
 
 import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.CourseEntity;
 import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.Module;
-import com.grupoenzo.aprendizagem_gamificada.exceptions.InsufficientCoursesCompletedException;
+import com.grupoenzo.aprendizagem_gamificada.core.domain.exceptions.InsufficientCoursesCompletedException;
 import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.Enrollment;
 import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.ModuleGrade;
 import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.Student;

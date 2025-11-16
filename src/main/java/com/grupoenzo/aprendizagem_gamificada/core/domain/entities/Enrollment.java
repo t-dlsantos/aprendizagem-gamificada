@@ -1,7 +1,7 @@
 package com.grupoenzo.aprendizagem_gamificada.core.domain.entities;
 
 import com.grupoenzo.aprendizagem_gamificada.core.domain.abstracts.Entity;
-import com.grupoenzo.aprendizagem_gamificada.exceptions.InsufficientCoursesCompletedException;
+import com.grupoenzo.aprendizagem_gamificada.core.domain.exceptions.InsufficientCoursesCompletedException;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

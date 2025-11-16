@@ -2,7 +2,6 @@ package com.grupoenzo.aprendizagem_gamificada.bdd.steps;
 
 import com.grupoenzo.aprendizagem_gamificada.bdd.World;
 import io.cucumber.java.en.*;
-import org.springframework.stereotype.Component;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

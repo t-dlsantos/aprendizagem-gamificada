@@ -5,15 +5,11 @@ import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.Enrollment;
 import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.Student;
 import com.grupoenzo.aprendizagem_gamificada.core.usecases.enrollment.repositories.EnrollmentRepository;
 import com.grupoenzo.aprendizagem_gamificada.core.usecases.student.repositories.StudentRepository;
-import com.grupoenzo.aprendizagem_gamificada.exceptions.EnrollmentNotFoundException;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.grupoenzo.aprendizagem_gamificada.core.domain.exceptions.EnrollmentNotFoundException;
 
 import java.util.UUID;
 
 public class FinalizeCourseUseCase {
-
     private final StudentRepository studentRepository;
     private final EnrollmentRepository enrollmentRepository;
 
@@ -22,6 +18,21 @@ public class FinalizeCourseUseCase {
         this.enrollmentRepository = enrollmentRepository;
     }
 
+    public Enrollment execute(UUID idEnrollment) {
+        Enrollment enrollment = enrollmentRepository.findById(idEnrollment).orElseThrow(EnrollmentNotFoundException::new);
+        Student student = enrollment.getStudent();
+
+        double averageGrade = enrollment.calculateAverageGrade();
+
+        if (averageGrade >= 7) {
+            student.addTickets(3);
+            studentRepository.save(student);
+        }
+
+        return enrollment;
+    }
+
+    // TODO: validar permanência
     public Enrollment execute(UUID idStudent, UUID idCourse) {
         Enrollment enrollment = enrollmentRepository
                 .findByStudentIdAndCourseId(idStudent, idCourse)
@@ -38,5 +49,4 @@ public class FinalizeCourseUseCase {
 
         return enrollment;
     }
-
 }

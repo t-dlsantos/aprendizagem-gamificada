@@ -7,4 +7,5 @@ import java.util.UUID;
 
 public interface EnrollmentRepository {
     Optional<Enrollment> findByStudentIdAndCourseId(UUID studentId, UUID courseId);
+    Optional<Enrollment> findById(UUID id);
 }
