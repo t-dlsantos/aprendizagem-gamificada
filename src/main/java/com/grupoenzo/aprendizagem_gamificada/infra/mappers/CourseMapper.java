@@ -2,15 +2,16 @@ package com.grupoenzo.aprendizagem_gamificada.infra.mappers;
 
 import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.Course;
 import com.grupoenzo.aprendizagem_gamificada.infra.entity.CourseJpaEntity;
+
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
 @Component
 public class CourseMapper {
-    private final EnrollmentMapper enrollmentMapper;
     private final ModuleMapper moduleMapper;
 
-    public CourseMapper(EnrollmentMapper enrollmentMapper,  ModuleMapper moduleMapper) {
-        this.enrollmentMapper = enrollmentMapper;
+    public CourseMapper(ModuleMapper moduleMapper) {
         this.moduleMapper = moduleMapper;
     }
 
@@ -19,7 +20,7 @@ public class CourseMapper {
                 entity.getId(),
                 entity.getName(),
                 entity.getDescription(),
-                enrollmentMapper.map(entity.getEnrollments()),
+                List.of(),
                 moduleMapper.map(entity.getModules())
         );
     }

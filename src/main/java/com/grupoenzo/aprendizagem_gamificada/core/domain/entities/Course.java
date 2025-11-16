@@ -19,6 +19,11 @@ public class Course extends Entity {
         this.modules = modules;
     }
 
+    public Course(UUID id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public UUID getId() {
         return id;
     }

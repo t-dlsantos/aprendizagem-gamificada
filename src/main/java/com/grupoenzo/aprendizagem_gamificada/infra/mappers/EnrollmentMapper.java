@@ -5,7 +5,6 @@ import com.grupoenzo.aprendizagem_gamificada.infra.entity.EnrollmentJpaEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.function.Function;
 
 @Component
 public class EnrollmentMapper {

@@ -1,5 +1,6 @@
 package com.grupoenzo.aprendizagem_gamificada.infra.mappers;
 
+import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.Course;
 import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.Module;
 
 import com.grupoenzo.aprendizagem_gamificada.infra.entity.ModuleJpaEntity;
@@ -9,18 +10,15 @@ import java.util.List;
 
 @Component
 public class ModuleMapper {
-    private final CourseMapper courseMapper;
-
-    public ModuleMapper(CourseMapper courseMapper) {
-        this.courseMapper = courseMapper;
-    }
-
     public Module map(ModuleJpaEntity entity) {
+        var jpaCourse = entity.getCourse();
+        var course = new Course(jpaCourse.getId(), jpaCourse.getName());
+
         return new Module(
-                entity.getId(),
-                entity.getName(),
-                entity.getDescription(),
-                courseMapper.map(entity.getCourse())
+            entity.getId(),
+            entity.getName(),
+            entity.getDescription(),
+            course
         );
     }
 

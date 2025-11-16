@@ -1,6 +1,5 @@
 package com.grupoenzo.aprendizagem_gamificada.infra.mappers;
 
-import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.Module;
 import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.ModuleGrade;
 import com.grupoenzo.aprendizagem_gamificada.infra.entity.ModuleGradeJpaEntity;
 import org.springframework.stereotype.Component;

@@ -1,7 +1,8 @@
 package com.grupoenzo.aprendizagem_gamificada.core.domain.entities;
 
 import com.grupoenzo.aprendizagem_gamificada.core.domain.abstracts.Entity;
-import com.grupoenzo.aprendizagem_gamificada.core.domain.exceptions.InsufficientCoursesCompletedException;
+import com.grupoenzo.aprendizagem_gamificada.core.domain.enums.EnrollmentStatus;
+import com.grupoenzo.aprendizagem_gamificada.core.exceptions.InsufficientModulesCompletedException;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class Enrollment extends Entity {
+    private EnrollmentStatus status;
     private Student student;
     private Course course;
     private List<ModuleGrade> moduleGrades;
@@ -28,6 +30,10 @@ public class Enrollment extends Entity {
     public Student getStudent() {
         return student;
     }
+
+    public EnrollmentStatus getStatus() { return status; }
+
+    public void setStatus(EnrollmentStatus status) { this.status = status; }
 
     public void setStudent(Student student) {
         this.student = student;
@@ -51,7 +57,7 @@ public class Enrollment extends Entity {
 
     public double calculateAverageGrade() {
         if (moduleGrades == null || moduleGrades.isEmpty() || moduleGrades.size() != course.getModules().size()) {
-            throw new InsufficientCoursesCompletedException();
+            throw new InsufficientModulesCompletedException();
         }
 
         return moduleGrades.stream()

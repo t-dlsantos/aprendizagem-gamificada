@@ -2,7 +2,7 @@ package com.grupoenzo.aprendizagem_gamificada.modules.course.entities;
 
 import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.CourseEntity;
 import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.Module;
-import com.grupoenzo.aprendizagem_gamificada.core.domain.exceptions.InsufficientCoursesCompletedException;
+import com.grupoenzo.aprendizagem_gamificada.core.exceptions.InsufficientModulesCompletedException;
 import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.Enrollment;
 import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.ModuleGrade;
 import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.Student;
@@ -50,21 +50,21 @@ public class EnrollmentTest {
     @DisplayName("Should throw InsufficientCoursesCompletedException when moduleGrades is null")
     void shouldThrowWhenModuleGradesIsNull() {
         enrollment.setModuleGrades(null);
-        assertThrows(InsufficientCoursesCompletedException.class, enrollment::calculateAverageGrade);
+        assertThrows(InsufficientModulesCompletedException.class, enrollment::calculateAverageGrade);
     }
 
     @Test
     @DisplayName("Should throw InsufficientCoursesCompletedException when moduleGrades is empty")
     void shouldThrowWhenModuleGradesIsEmpty() {
         enrollment.setModuleGrades(List.of());
-        assertThrows(InsufficientCoursesCompletedException.class, enrollment::calculateAverageGrade);
+        assertThrows(InsufficientModulesCompletedException.class, enrollment::calculateAverageGrade);
     }
 
     @Test
     @DisplayName("Should throw InsufficientCoursesCompletedException when moduleGrades.size() < course.modules.size()")
     void shouldThrowWhenModuleGradesIsLessThanCourseModules() {
         enrollment.setModuleGrades(List.of());
-        assertThrows(InsufficientCoursesCompletedException.class, enrollment::calculateAverageGrade);
+        assertThrows(InsufficientModulesCompletedException.class, enrollment::calculateAverageGrade);
     }
 
     @Test
@@ -99,7 +99,7 @@ public class EnrollmentTest {
                 .build();
         enrollment.setModuleGrades(List.of(grade1));
 
-        assertThrows(InsufficientCoursesCompletedException.class, enrollment::calculateAverageGrade);
+        assertThrows(InsufficientModulesCompletedException.class, enrollment::calculateAverageGrade);
     }
 
 }

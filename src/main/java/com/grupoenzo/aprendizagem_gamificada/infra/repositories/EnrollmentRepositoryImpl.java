@@ -23,4 +23,9 @@ public class EnrollmentRepositoryImpl implements EnrollmentRepository {
     public Optional<Enrollment> findByStudentIdAndCourseId(UUID studentId, UUID courseId) {
         return jpaRepository.findByStudentIdAndCourseId(studentId, courseId).map(this.mapper::map);
     }
+
+    @Override
+    public Optional<Enrollment> findById(UUID id) {
+        return jpaRepository.findById(id).map(this.mapper::map);
+    }
 }

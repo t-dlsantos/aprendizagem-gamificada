@@ -49,7 +49,7 @@ public class Student extends Entity {
 
     public void addTickets(int quantity) {
         int currentValue = this.ticket.getValue();
-        this.ticket = new Ticket(currentValue + quantity);
+        this.setTicket(new Ticket(currentValue + quantity));
     }
 
 }

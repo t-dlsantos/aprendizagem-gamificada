@@ -28,6 +28,7 @@ public class StudentJpaEntity {
     private String name;
 
     @Embedded
+    @AttributeOverride(name = "value", column = @Column(name = "ticket_value"))
     private Ticket ticket;
 
     @OneToMany(mappedBy = "student")

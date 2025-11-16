@@ -1,4 +1,4 @@
-package com.grupoenzo.aprendizagem_gamificada.core.domain.exceptions;
+package com.grupoenzo.aprendizagem_gamificada.core.exceptions;
 
 public class EnrollmentNotFoundException extends RuntimeException {
     public EnrollmentNotFoundException() {
