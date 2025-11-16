@@ -1,4 +1,4 @@
-package com.grupoenzo.aprendizagem_gamificada.modules.course.entities;
+package com.grupoenzo.aprendizagem_gamificada.core.domain.entities;
 
 import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.Course;
 import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.Module;

@@ -1,4 +1,4 @@
-package com.grupoenzo.aprendizagem_gamificada.modules.enrollment.useCases;
+package com.grupoenzo.aprendizagem_gamificada.core.usecases.enrollment;
 
 import com.grupoenzo.aprendizagem_gamificada.core.usecases.enrollment.FinalizeCourseUseCase;
 import com.grupoenzo.aprendizagem_gamificada.core.usecases.enrollment.repositories.EnrollmentRepository;
@@ -47,6 +47,34 @@ public class FinalizeCourseUseCaseTest {
         this.module = new Module(UUID.randomUUID(), "Module 1", "Unit tests", course);
         this.course.setModules(List.of(module));
         this.enrollment = new Enrollment(UUID.randomUUID(), student, course);
+    }
+
+    @Test
+    @DisplayName("Should finalize enrollment by id and release tickets when average >= 7")
+    public void shouldFinalizeByIdWhenAverageIs7OrAbove() {
+        ModuleGrade moduleGrade = new ModuleGrade(UUID.randomUUID(), module, student, enrollment, 7.0);
+        enrollment.setModuleGrades(List.of(moduleGrade));
+
+        when(EnrollmentRepository.findById(enrollment.getId())).thenReturn(Optional.of(enrollment));
+
+        var ticketsBefore = student.getTicket().getValue();
+        var result = finalizeCourseUseCase.execute(enrollment.getId());
+
+        var ticketsAfter = result.getStudent().getTicket().getValue();
+        assertEquals(ticketsBefore + 3, ticketsAfter);
+        assertEquals(com.grupoenzo.aprendizagem_gamificada.core.domain.enums.EnrollmentStatus.COMPLETED, result.getStatus());
+    }
+
+    @Test
+    @DisplayName("Should throw InsufficientGradeException when finalizing by id and average < 7")
+    public void shouldThrowWhenFinalizingByIdAndAverageBelow7() {
+        ModuleGrade moduleGrade = new ModuleGrade(UUID.randomUUID(), module, student, enrollment, 5.0);
+        enrollment.setModuleGrades(List.of(moduleGrade));
+
+        when(EnrollmentRepository.findById(enrollment.getId())).thenReturn(Optional.of(enrollment));
+
+        org.junit.jupiter.api.Assertions.assertThrows(com.grupoenzo.aprendizagem_gamificada.core.exceptions.InsufficientGradeException.class,
+                () -> finalizeCourseUseCase.execute(enrollment.getId()));
     }
 
     @Test
