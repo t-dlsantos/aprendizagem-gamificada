@@ -1,6 +1,6 @@
 package com.grupoenzo.aprendizagem_gamificada.modules.course.entities;
 
-import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.CourseEntity;
+import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.Course;
 import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.Module;
 import com.grupoenzo.aprendizagem_gamificada.core.exceptions.InsufficientModulesCompletedException;
 import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.Enrollment;
@@ -18,28 +18,24 @@ import static org.junit.jupiter.api.Assertions.*;
 public class EnrollmentTest {
 
     private Student student;
-    private CourseEntity course;
+    private Course course;
     private Module module;
     private Enrollment enrollment;
 
     @BeforeEach
     void setup() {
-        student = Student.builder().id(UUID.randomUUID()).name("Thiago").tickets(0).build();
-        course = CourseEntity.builder().id(UUID.randomUUID()).name("DevOps").description("A course to master DevOps").build();
-        module = Module.builder().id(UUID.randomUUID()).name("Module 1").description("Unit tests").course(course).build();
+        student = new Student(UUID.randomUUID(), "Thiago", new com.grupoenzo.aprendizagem_gamificada.core.domain.valueobjects.Ticket(0));
+        course = new Course(UUID.randomUUID(), "DevOps");
+        course.setDescription("A course to master DevOps");
+        module = new Module(UUID.randomUUID(), "Module 1", "Unit tests", course);
         course.setModules(List.of(module));
-        enrollment = Enrollment.builder().id(UUID.randomUUID()).course(course).student(student).build();
+        enrollment = new Enrollment(UUID.randomUUID(), student, course);
     }
 
     @Test
     @DisplayName("Should calculate average grade correctly with one module")
     void shouldCalculateAverageGrade() {
-        ModuleGrade moduleGrade = ModuleGrade.builder()
-                .student(student)
-                .module(module)
-                .enrollment(enrollment)
-                .grade(8.0)
-                .build();
+        ModuleGrade moduleGrade = new ModuleGrade(UUID.randomUUID(), module, student, enrollment, 8.0);
         enrollment.setModuleGrades(List.of(moduleGrade));
 
         double average = enrollment.calculateAverageGrade();
@@ -70,11 +66,11 @@ public class EnrollmentTest {
     @Test
     @DisplayName("Should calculate average grade correctly with multiple modules")
     void shouldCalculateAverageGradeWithMultipleModules() {
-        Module module2 = Module.builder().id(UUID.randomUUID()).name("Module 2").course(course).build();
+        Module module2 = new Module(UUID.randomUUID(), "Module 2", null, course);
         course.setModules(List.of(module, module2));
 
-        ModuleGrade grade1 = ModuleGrade.builder().student(student).module(module).enrollment(enrollment).grade(6.0).build();
-        ModuleGrade grade2 = ModuleGrade.builder().student(student).module(module2).enrollment(enrollment).grade(8.0).build();
+        ModuleGrade grade1 = new ModuleGrade(UUID.randomUUID(), module, student, enrollment, 6.0);
+        ModuleGrade grade2 = new ModuleGrade(UUID.randomUUID(), module2, student, enrollment, 8.0);
         enrollment.setModuleGrades(List.of(grade1, grade2));
 
         double average = enrollment.calculateAverageGrade();
@@ -84,19 +80,10 @@ public class EnrollmentTest {
     @Test
     @DisplayName("Should throw InsufficientCoursesCompletedException when moduleGrades.size() is different from course.modules.size()")
     void shouldThrowWhenModuleGradesSizeDoesNotMatchCourseModules() {
-        Module module2 = Module.builder()
-                .id(UUID.randomUUID())
-                .name("Module 2")
-                .course(course)
-                .build();
+        Module module2 = new Module(UUID.randomUUID(), "Module 2", null, course);
         course.setModules(List.of(module, module2));
 
-        ModuleGrade grade1 = ModuleGrade.builder()
-                .student(student)
-                .module(module)
-                .enrollment(enrollment)
-                .grade(9.0)
-                .build();
+        ModuleGrade grade1 = new ModuleGrade(UUID.randomUUID(), module, student, enrollment, 9.0);
         enrollment.setModuleGrades(List.of(grade1));
 
         assertThrows(InsufficientModulesCompletedException.class, enrollment::calculateAverageGrade);

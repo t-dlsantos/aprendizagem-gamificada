@@ -25,17 +25,17 @@ public class FinalizeCourseSteps {
 
     @When("the student finalizes the course")
     public void studentFinalizesTheCourse() {
-        world.ticketsBefore = world.student.getTickets();
+        world.ticketsBefore = world.student.getTicket().getValue();
         world.finalizeCourseUseCase.execute(world.student.getId(), world.course.getId());
     }
 
     @Then("the student should have {int} more tickets")
     public void studentShouldHaveMoreTickets(int extraTickets) {
-        assertEquals(world.ticketsBefore + extraTickets, world.student.getTickets());
+        assertEquals(world.ticketsBefore + extraTickets, world.student.getTicket().getValue());
     }
 
     @Then("the student should have the same number of tickets")
     public void studentShouldHaveSameNumberOfTickets() {
-        assertEquals(world.ticketsBefore, world.student.getTickets());
+        assertEquals(world.ticketsBefore, world.student.getTicket().getValue());
     }
 }

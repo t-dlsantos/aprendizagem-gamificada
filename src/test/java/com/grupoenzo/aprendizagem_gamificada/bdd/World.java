@@ -1,6 +1,6 @@
 package com.grupoenzo.aprendizagem_gamificada.bdd;
 
-import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.CourseEntity;
+import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.Course;
 import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.Module;
 import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.Enrollment;
 import com.grupoenzo.aprendizagem_gamificada.core.usecases.enrollment.FinalizeCourseUseCase;
@@ -17,7 +17,7 @@ import io.cucumber.spring.ScenarioScope;
 
 public class World {
     public Student student;
-    public CourseEntity course;
+    public Course course;
     public Module module;
     public Enrollment enrollment;
     public ModuleGrade moduleGrade;

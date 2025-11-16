@@ -2,7 +2,7 @@ package com.grupoenzo.aprendizagem_gamificada.bdd.steps;
 
 
 import com.grupoenzo.aprendizagem_gamificada.bdd.World;
-import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.CourseEntity;
+import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.Course;
 import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.Module;
 import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.Enrollment;
 import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.ModuleGrade;
@@ -23,41 +23,20 @@ final class steps_support {
     private steps_support() {}
 
     static void student(World world, String name, int tickets) {
-        world.student = Student.builder()
-                .id(UUID.randomUUID())
-                .name(name)
-                .tickets(tickets)
-                .build();
+        world.student = new Student(UUID.randomUUID(), name, new com.grupoenzo.aprendizagem_gamificada.core.domain.valueobjects.Ticket(tickets));
     }
 
     static void courseWithGrade(World world, String courseName, double grade) {
-        world.course = CourseEntity.builder()
-                .id(UUID.randomUUID())
-                .name(courseName)
-                .description("Test course")
-                .build();
+        world.course = new Course(UUID.randomUUID(), courseName);
+        world.course.setDescription("Test course");
 
-        world.module = Module.builder()
-                .id(UUID.randomUUID())
-                .name("Module 1")
-                .description("Test module")
-                .course(world.course)
-                .build();
+        world.module = new Module(UUID.randomUUID(), "Module 1", "Test module", world.course);
                 
         world.course.setModules(List.of(world.module));
 
-        world.enrollment = Enrollment.builder()
-                .id(UUID.randomUUID())
-                .course(world.course)
-                .student(world.student)
-                .build();
+        world.enrollment = new Enrollment(UUID.randomUUID(), world.student, world.course);
 
-        world.moduleGrade = ModuleGrade.builder()
-                .student(world.student)
-                .module(world.module)
-                .enrollment(world.enrollment)
-                .grade(grade)
-                .build();
+        world.moduleGrade = new ModuleGrade(UUID.randomUUID(), world.module, world.student, world.enrollment, grade);
         
         world.enrollment.setModuleGrades(List.of(world.moduleGrade));
 

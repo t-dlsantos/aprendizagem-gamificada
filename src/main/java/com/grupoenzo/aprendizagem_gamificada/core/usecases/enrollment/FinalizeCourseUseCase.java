@@ -1,5 +1,6 @@
 package com.grupoenzo.aprendizagem_gamificada.core.usecases.enrollment;
 
+import org.springframework.stereotype.Service;
 
 import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.Enrollment;
 import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.Student;
@@ -11,6 +12,7 @@ import com.grupoenzo.aprendizagem_gamificada.core.exceptions.EnrollmentNotFoundE
 
 import java.util.UUID;
 
+@Service
 public class FinalizeCourseUseCase {
     private final StudentRepository studentRepository;
     private final EnrollmentRepository enrollmentRepository;
