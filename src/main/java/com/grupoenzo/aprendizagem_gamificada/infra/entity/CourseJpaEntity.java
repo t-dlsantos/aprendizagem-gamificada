@@ -1,6 +1,5 @@
 package com.grupoenzo.aprendizagem_gamificada.infra.entity;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
