@@ -1,35 +1,49 @@
 pipeline {
-  agent any
+  agent any                               // Usa qualquer agente disponível no Jenkins
 
   stages {
-    stage('Checkout') {
+
+    stage('Checkout') {                   // Etapa responsável por obter o código do repositório
       steps {
-        checkout scm
+        checkout scm                      // Faz checkout usando a configuração SCM do job (Git, etc.)
       }
     }
 
-    stage('Start container') {
+    stage('Start container') {            // Etapa que inicia os containers definidos no compose
       steps {
-        echo 'Starting container from Docker Hub...'
-        bat 'docker-compose -f docker-compose.staging.yml pull' // Baixa a imagem do Docker Hub
+        echo 'Starting container from Docker Hub...'   // Apenas imprime mensagem de log
+
+        bat 'docker-compose -f docker-compose.staging.yml pull' 
+        // Baixa a imagem mais recente do Docker Hub conforme definido no docker-compose.staging.yml
+
         bat 'docker-compose -f docker-compose.staging.yml up -d --no-color'
-        sleep time: 60, unit: 'SECONDS' // Aumenta o tempo para o serviço Spring Boot iniciar
-        bat 'docker-compose -f docker-compose.staging.yml logs' // Verifica os logs para conferir o status do Spring Boot
-        bat 'docker-compose -f docker-compose.staging.yml ps' // Verifica o status do container
+        // Sobe os serviços em modo "detached" (-d), sem cores no output (--no-color)
+
+        sleep time: 60, unit: 'SECONDS'   
+        // Pausa por 60 segundos para dar tempo ao Spring Boot ou outra aplicação iniciar
+
+        bat 'docker-compose -f docker-compose.staging.yml logs'
+        // Mostra os logs dos containers, útil para ver se a aplicação iniciou corretamente
+
+        bat 'docker-compose -f docker-compose.staging.yml ps'
+        // Lista os containers ativos e seus status
       }
     }
 
-    stage('Run tests against the container') {
+    stage('Run tests against the container') {   // Etapa para testar se o serviço está respondendo
       steps {
         bat 'curl http://localhost:8686 || echo "Service not responding"'
+        // Faz uma requisição ao serviço; se falhar, imprime mensagem
+        // Requer cURL instalado no Windows do agente Jenkins
       }
     }
+
   }
 
   post {
-    always {
-      echo 'Pipeline completed'
-      // Não derruba mais o container aqui
+    always {                              // Executado sempre, independente do resultado do pipeline
+      echo 'Pipeline completed'           // Apenas imprime mensagem final
+      // Não derruba mais o container aqui; ele continua rodando após o pipeline
     }
   }
 }
