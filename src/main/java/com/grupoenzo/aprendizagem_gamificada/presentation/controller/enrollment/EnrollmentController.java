@@ -1,6 +1,8 @@
 package com.grupoenzo.aprendizagem_gamificada.presentation.controller.enrollment;
 
 import com.grupoenzo.aprendizagem_gamificada.core.usecases.enrollment.FinalizeCourseUseCase;
+import com.grupoenzo.aprendizagem_gamificada.presentation.dtos.responses.FinalizeCourseResponse;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
@@ -15,13 +17,20 @@ public class EnrollmentController implements EnrollmentResource {
     }
     
     @Override
-    public ResponseEntity<Object> finalize(UUID id) {
-        try {
-            var result = finalizeCourseUseCase.execute(id);
-            return ResponseEntity.ok(result);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-
+public ResponseEntity<Object> finalize(UUID id) {
+    try {
+        var enrollment = finalizeCourseUseCase.execute(id);
+        var response = new FinalizeCourseResponse(
+            enrollment.getId(),
+            enrollment.getStudent().getId(),
+            enrollment.getCourse().getId(),
+            enrollment.getStatus(),
+            enrollment.calculateAverageGrade(),
+            3
+        );
+        return ResponseEntity.ok(response);
+    } catch (Exception e) {
+        return ResponseEntity.badRequest().body(e.getMessage());
     }
+}
 }

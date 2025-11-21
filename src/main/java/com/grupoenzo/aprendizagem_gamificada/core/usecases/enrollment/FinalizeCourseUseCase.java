@@ -34,7 +34,6 @@ public class FinalizeCourseUseCase {
         enrollment.setStatus(EnrollmentStatus.COMPLETED);
         student.addTickets(3);
         studentRepository.save(student);
-        System.out.println("Passamos pela guerra!" + enrollment);
 
         return enrollment;
     }
