@@ -1,6 +1,13 @@
 package com.grupoenzo.recommender.core.usecases;
 
 import com.grupoenzo.recommender.core.ports.llm.LlmClient;
+import com.grupoenzo.recommender.core.embeddings.EmbeddingProvider;
+import com.grupoenzo.recommender.infra.vector.VectorStore;
+import com.grupoenzo.recommender.core.domain.StudentProfile;
+import com.grupoenzo.recommender.core.domain.RecommendedCourse;
+import com.grupoenzo.recommender.core.domain.ExplainedRecommendation;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class RankExplain {
     private final LlmClient llm;

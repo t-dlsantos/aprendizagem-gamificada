@@ -1,6 +1,13 @@
 package com.grupoenzo.recommender.core.usecases;
 
+import com.grupoenzo.recommender.core.ports.repositories.CourseRepository;
+import com.grupoenzo.recommender.core.ports.repositories.EnrollmentRepository;
+import com.grupoenzo.recommender.core.embeddings.EmbeddingProvider;
+import com.grupoenzo.recommender.core.domain.RecommendedCourse;
+import com.grupoenzo.recommender.core.exceptions.CourseNotFoundException;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.UUID;
 
 public class GenerateRank {
     private final CourseRepository courseRepository;
