@@ -1,6 +1,6 @@
 package com.grupoenzo.aprendizagem_gamificada.presentation.dtos.responses;
 
-import com.grupoenzo.aprendizagem_gamificada.core.domain.enums;
+import com.grupoenzo.aprendizagem_gamificada.core.domain.enums.EnrollmentStatus;
 import java.util.UUID;
 
 public class FinalizeCourseResponse {
