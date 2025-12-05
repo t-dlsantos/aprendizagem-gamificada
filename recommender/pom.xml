@@ -21,15 +21,10 @@
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>com.grupoenzo</groupId>
-            <artifactId>src</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
+        <!-- Spring Boot Web -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
         <dependency>
@@ -56,27 +51,33 @@
             <optional>true</optional>
         </dependency>
 
+        <!-- OpenAPI / Swagger -->
         <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <scope>test</scope>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
 
     </dependencies>
 
     <build>
+        <sourceDirectory>main/java</sourceDirectory>
+        <resources>
+            <resource>
+                <directory>main/resources</directory>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <skip>true</skip>
+                    <mainClass>com.grupoenzo.recommender.RecommenderApplication</mainClass>
                 </configuration>
             </plugin>
 
