@@ -20,6 +20,16 @@ public class EnrollmentController implements EnrollmentResource {
 public ResponseEntity<Object> finalize(UUID id) {
     try {
         var enrollment = finalizeCourseUseCase.execute(id);
+
+        var recommendation = recommenderClient.getRecommendation(
+            new RecommendationRequest(
+                enrollment.getStudent().getId(),
+                enrollment.getCourse().getId(),
+                enrollment.getStudent().getEnrollments(),
+                enrollment.getCourse().getName()
+            )
+        );
+
         var response = new FinalizeCourseResponse(
             enrollment.getId(),
             enrollment.getStudent().getId(),
@@ -28,6 +38,9 @@ public ResponseEntity<Object> finalize(UUID id) {
             enrollment.calculateAverageGrade(),
             3
         );
+
+        response.setRecommendation(recommendation);
+
         return ResponseEntity.ok(response);
     } catch (Exception e) {
         return ResponseEntity.badRequest().body(e.getMessage());
