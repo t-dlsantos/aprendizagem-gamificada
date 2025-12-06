@@ -38,6 +38,9 @@ public class FinalizeCourseUseCaseTest {
     private EnrollmentRepository EnrollmentRepository;
     @Mock
     private ApplicationEventPublisher eventPublisher;
+    @Mock
+    private com.grupoenzo.aprendizagem_gamificada.infra.messaging.RabbitMqCourseEventPublisher rabbitMqPublisher;
+
     @InjectMocks
     private FinalizeCourseUseCase finalizeCourseUseCase;
 

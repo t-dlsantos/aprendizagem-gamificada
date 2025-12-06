@@ -41,7 +41,7 @@ final class steps_support {
         world.enrollment.setModuleGrades(List.of(world.moduleGrade));
 
         world.EnrollmentRepository = mock(EnrollmentRepository.class);
-        when(world.EnrollmentRepository.findByStudentIdAndCourseId(
+        when(world.EnrollmentRepository.findByStudentIdAndCourseIdWithGrades(
                 world.student.getId(),
                 world.course.getId()
         )).thenReturn(Optional.of(world.enrollment));
@@ -49,6 +49,7 @@ final class steps_support {
         world.StudentRepository = mock(StudentRepository.class);
         when(world.StudentRepository.save(world.student)).thenReturn(world.student);
 
+        world.eventPublisher = mock(org.springframework.context.ApplicationEventPublisher.class);
         com.grupoenzo.aprendizagem_gamificada.infra.messaging.RabbitMqCourseEventPublisher rabbitMqPublisher = mock(com.grupoenzo.aprendizagem_gamificada.infra.messaging.RabbitMqCourseEventPublisher.class);
 
         world.finalizeCourseUseCase = new FinalizeCourseUseCase(world.StudentRepository, world.EnrollmentRepository, world.eventPublisher, rabbitMqPublisher);
