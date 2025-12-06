@@ -2,6 +2,7 @@ package com.grupoenzo.aprendizagem_gamificada.core.domain.entities;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -22,5 +23,27 @@ public class CourseEntityTest {
         course.setModules(List.of(m1, m2));
 
         assertEquals(2, course.getModules().size());
+    }
+
+    @Test
+    void constructor_handles_null_lists() {
+        UUID id = UUID.randomUUID();
+        Course course = new Course(id, "Name", "Description", null, null);
+        
+        assertNotNull(course.getEnrollments());
+        assertTrue(course.getEnrollments().isEmpty());
+        assertNotNull(course.getModules());
+        assertTrue(course.getModules().isEmpty());
+    }
+
+    @Test
+    void constructor_handles_provided_lists() {
+        UUID id = UUID.randomUUID();
+        List<Enrollment> enrollments = new ArrayList<>();
+        List<Module> modules = new ArrayList<>();
+        Course course = new Course(id, "Name", "Description", enrollments, modules);
+        
+        assertSame(enrollments, course.getEnrollments());
+        assertSame(modules, course.getModules());
     }
 }

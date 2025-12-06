@@ -3,8 +3,6 @@ package com.grupoenzo.aprendizagem_gamificada.infra.mappers;
 import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.Course;
 import com.grupoenzo.aprendizagem_gamificada.infra.entity.CourseJpaEntity;
 
-import java.util.List;
-
 import org.springframework.stereotype.Component;
 
 @Component

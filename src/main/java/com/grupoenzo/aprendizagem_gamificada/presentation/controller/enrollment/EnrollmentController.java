@@ -30,7 +30,7 @@ public class EnrollmentController implements EnrollmentResource {
                 ? enrollment.getStudent().getEnrollments().stream()
                     .map(e -> e.getCourse().getId())
                     .collect(Collectors.toList())
-                : java.util.Collections.<java.util.UUID>emptyList();
+                : java.util.Collections.<UUID>emptyList();
 
             var recommendation = recommenderClient.getRecommendation(
                 new RecommendationRequest(
