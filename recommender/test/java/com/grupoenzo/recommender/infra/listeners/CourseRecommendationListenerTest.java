@@ -88,4 +88,22 @@ public class CourseRecommendationListenerTest {
         
         verify(generateRank, times(1)).execute(studentId, courseId, 5);
     }
+
+    @Test
+    @DisplayName("Should handle empty recommendations")
+    public void shouldHandleEmptyRecommendations() {
+        // Arrange
+        when(generateRank.execute(studentId, courseId, 5))
+            .thenReturn(List.of());
+        
+        when(rankExplain.execute(any(StudentProfile.class), any()))
+            .thenReturn(List.of());
+        
+        // Act
+        listener.onCourseFinalizedEvent(event);
+        
+        // Assert
+        verify(generateRank, times(1)).execute(studentId, courseId, 5);
+        verify(rankExplain, times(1)).execute(any(StudentProfile.class), any());
+    }
 }
