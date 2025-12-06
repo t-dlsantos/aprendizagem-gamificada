@@ -1,9 +1,11 @@
 package com.grupoenzo.recommender.infra.embeddings;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import com.grupoenzo.recommender.core.embeddings.EmbeddingProvider;
 
 @Component
+@Profile("test")
 public class SimpleEmbeddingProvider implements EmbeddingProvider {
     @Override
     public float[] embed(String text) {

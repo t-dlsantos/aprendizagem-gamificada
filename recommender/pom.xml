@@ -44,19 +44,19 @@
         <dependency>
             <groupId>dev.langchain4j</groupId>
             <artifactId>langchain4j</artifactId>
-            <version>1.8.0</version>
+            <version>0.35.0</version>
         </dependency>
 
         <dependency>
             <groupId>dev.langchain4j</groupId>
             <artifactId>langchain4j-open-ai</artifactId>
-            <version>1.8.0</version>
+            <version>0.35.0</version>
         </dependency>
 
         <dependency>
             <groupId>dev.langchain4j</groupId>
             <artifactId>langchain4j-embeddings</artifactId>
-            <version>1.8.0-beta15</version>
+            <version>0.35.0</version>
         </dependency>
 
         <dependency>
@@ -81,6 +81,7 @@
 
     <build>
         <sourceDirectory>main/java</sourceDirectory>
+        <testSourceDirectory>test/java</testSourceDirectory>
         <resources>
             <resource>
                 <directory>main/resources</directory>

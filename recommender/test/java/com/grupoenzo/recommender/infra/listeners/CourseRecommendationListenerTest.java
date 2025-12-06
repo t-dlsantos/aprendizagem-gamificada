@@ -2,8 +2,8 @@ package com.grupoenzo.recommender.infra.listeners;
 
 import com.grupoenzo.aprendizagem_gamificada.core.domain.events.CourseFinalizedEvent;
 import com.grupoenzo.recommender.core.domain.StudentProfile;
-import com.grupoenzo.recommender.core.domain.dto.CandidateDTO;
-import com.grupoenzo.recommender.core.domain.entities.Course;
+import com.grupoenzo.recommender.core.domain.RecommendedCourse;
+import com.grupoenzo.recommender.core.domain.Course;
 import com.grupoenzo.recommender.core.usecases.GenerateRank;
 import com.grupoenzo.recommender.core.usecases.RankExplain;
 import org.junit.jupiter.api.BeforeEach;
@@ -43,7 +43,7 @@ public class CourseRecommendationListenerTest {
     public void setup() {
         studentId = UUID.randomUUID();
         courseId = UUID.randomUUID();
-        event = new CourseFinalizedEvent(studentId, courseId, 8.5);
+        event = new CourseFinalizedEvent(this, studentId, courseId, 8.5);
     }
     
     @Test
@@ -51,7 +51,7 @@ public class CourseRecommendationListenerTest {
     public void shouldProcessRecommendationWhenEventReceived() {
         // Arrange
         var candidates = List.of(
-            new CandidateDTO(new Course(UUID.randomUUID(), "Spring Advanced"), 0.95)
+            new RecommendedCourse(new Course(UUID.randomUUID(), "Spring Advanced"), 0.95)
         );
         
         when(generateRank.execute(studentId, courseId, 5))

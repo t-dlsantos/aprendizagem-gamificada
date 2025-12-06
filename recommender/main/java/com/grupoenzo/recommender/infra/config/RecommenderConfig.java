@@ -17,11 +17,6 @@ import java.util.Map;
 public class RecommenderConfig {
 
     @Bean
-    public LlmClient llmClient() {
-        return new DummyLlmClient();
-    }
-
-    @Bean
     public VectorStore vectorStore(EmbeddingProvider embProvider, CourseRepository courseRepo) {
         InMemoryVectorStore store = new InMemoryVectorStore();
         // indexa cursos (se houver)
