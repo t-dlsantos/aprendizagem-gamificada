@@ -8,11 +8,15 @@ public class Course {
     private String name;
     private String description;
 
-    public Course(UUID id, String title) {
+    public Course(UUID id, String title, String description) {
         this.id = id;
         this.title = title;
         this.name = title;
-        this.description = "";
+        this.description = description;
+    }
+
+    public Course(UUID id, String title) {
+        this(id, title, "");
     }
 
     public UUID getId() { return id; }

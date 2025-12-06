@@ -6,6 +6,7 @@ import com.grupoenzo.recommender.core.domain.Enrollment;
 import java.util.*;
 
 @Repository
+@org.springframework.context.annotation.Profile("mock")
 public class InMemoryEnrollmentRepository implements EnrollmentRepository {
     private final List<Enrollment> enrollments = new ArrayList<>();
 

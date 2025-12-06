@@ -7,6 +7,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Repository
+@org.springframework.context.annotation.Profile("mock")
 public class InMemoryCourseRepository implements CourseRepository {
     private final Map<UUID, Course> courses = new ConcurrentHashMap<>();
 
