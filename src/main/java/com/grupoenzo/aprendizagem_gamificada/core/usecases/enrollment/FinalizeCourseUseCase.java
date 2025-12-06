@@ -23,7 +23,8 @@ public class FinalizeCourseUseCase {
     }
 
     public Enrollment execute(UUID idEnrollment) {
-        Enrollment enrollment = enrollmentRepository.findById(idEnrollment).orElseThrow(EnrollmentNotFoundException::new);
+        Enrollment enrollment = enrollmentRepository.findByIdWithGrades(idEnrollment).orElseThrow(EnrollmentNotFoundException::new);
+
         Student student = enrollment.getStudent();
 
         double averageGrade = enrollment.calculateAverageGrade();
@@ -41,7 +42,7 @@ public class FinalizeCourseUseCase {
     // TODO: validar permanência
     public Enrollment execute(UUID idStudent, UUID idCourse) {
         Enrollment enrollment = enrollmentRepository
-                .findByStudentIdAndCourseId(idStudent, idCourse)
+                .findByStudentIdAndCourseIdWithGrades(idStudent, idCourse)
                 .orElseThrow(EnrollmentNotFoundException::new);
 
         Student student = enrollment.getStudent();

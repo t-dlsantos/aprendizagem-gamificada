@@ -14,4 +14,10 @@ public interface JpaEnrollmentRepository extends JpaRepository<EnrollmentJpaEnti
         @Param("studentId") UUID studentId,
         @Param("courseId") UUID courseId
     );
+
+    @Query("SELECT e FROM enrollment e LEFT JOIN FETCH e.moduleGrades WHERE e.student.id = :studentId AND e.course.id = :courseId")
+    Optional<EnrollmentJpaEntity> findByStudentIdAndCourseIdWithGrades(@Param("studentId") UUID studentId, @Param("courseId") UUID courseId);
+
+    @Query("SELECT e FROM enrollment e LEFT JOIN FETCH e.moduleGrades WHERE e.id = :id")
+    Optional<EnrollmentJpaEntity> findByIdWithGrades(@Param("id") UUID id);
 }
