@@ -8,6 +8,17 @@ services:
       POSTGRES_DB: sapi
     volumes:
       - db-volume:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
 
   api:
     image: jamestheboy/aprendizagem:latest

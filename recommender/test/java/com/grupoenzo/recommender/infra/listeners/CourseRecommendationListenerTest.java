@@ -54,11 +54,19 @@ public class CourseRecommendationListenerTest {
             new RecommendedCourse(new Course(UUID.randomUUID(), "Spring Advanced"), 0.95)
         );
         
+        var explanations = List.of(
+            new com.grupoenzo.recommender.core.domain.ExplainedRecommendation(
+                candidates.get(0).getCourse(), 
+                "Because you liked Java...",
+                candidates.get(0).getSimilarity()
+            )
+        );
+        
         when(generateRank.execute(studentId, courseId, 5))
             .thenReturn(candidates);
         
         when(rankExplain.execute(any(StudentProfile.class), any()))
-            .thenReturn(candidates);
+            .thenReturn(explanations);
         
         // Act
         listener.onCourseFinalizedEvent(event);

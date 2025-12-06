@@ -11,6 +11,7 @@ import com.grupoenzo.aprendizagem_gamificada.core.exceptions.InsufficientGradeEx
 import com.grupoenzo.aprendizagem_gamificada.core.usecases.enrollment.repositories.EnrollmentRepository;
 import com.grupoenzo.aprendizagem_gamificada.core.usecases.student.repositories.StudentRepository;
 import com.grupoenzo.aprendizagem_gamificada.core.exceptions.EnrollmentNotFoundException;
+import com.grupoenzo.aprendizagem_gamificada.infra.messaging.RabbitMqCourseEventPublisher;
 
 import java.util.UUID;
 
@@ -19,11 +20,16 @@ public class FinalizeCourseUseCase {
     private final StudentRepository studentRepository;
     private final EnrollmentRepository enrollmentRepository;
     private final ApplicationEventPublisher eventPublisher;
+    private final RabbitMqCourseEventPublisher rabbitMqPublisher;
 
-    public FinalizeCourseUseCase(StudentRepository studentRepository, EnrollmentRepository enrollmentRepository, ApplicationEventPublisher eventPublisher) {
+    public FinalizeCourseUseCase(StudentRepository studentRepository, 
+                                 EnrollmentRepository enrollmentRepository, 
+                                 ApplicationEventPublisher eventPublisher,
+                                 RabbitMqCourseEventPublisher rabbitMqPublisher) {
         this.studentRepository = studentRepository;
         this.enrollmentRepository = enrollmentRepository;
         this.eventPublisher = eventPublisher;
+        this.rabbitMqPublisher = rabbitMqPublisher;
     }
 
     public Enrollment execute(UUID idEnrollment) {
@@ -43,6 +49,14 @@ public class FinalizeCourseUseCase {
         // Publicar evento para iniciar processo de recomendação
         eventPublisher.publishEvent(new CourseFinalizedEvent(
             this,
+            student.getId(),
+            enrollment.getCourse().getId(),
+            averageGrade
+        ));
+
+        // Publicar evento para RabbitMQ (Microserviço de Recomendação)
+        rabbitMqPublisher.publishCourseFinalized(new com.grupoenzo.aprendizagem_gamificada.domain.events.CourseFinalizedEvent(
+            enrollment.getId(),
             student.getId(),
             enrollment.getCourse().getId(),
             averageGrade

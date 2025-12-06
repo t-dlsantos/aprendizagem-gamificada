@@ -49,6 +49,8 @@ final class steps_support {
         world.StudentRepository = mock(StudentRepository.class);
         when(world.StudentRepository.save(world.student)).thenReturn(world.student);
 
-        world.finalizeCourseUseCase = new FinalizeCourseUseCase(world.StudentRepository, world.EnrollmentRepository, world.eventPublisher);
+        com.grupoenzo.aprendizagem_gamificada.infra.messaging.RabbitMqCourseEventPublisher rabbitMqPublisher = mock(com.grupoenzo.aprendizagem_gamificada.infra.messaging.RabbitMqCourseEventPublisher.class);
+
+        world.finalizeCourseUseCase = new FinalizeCourseUseCase(world.StudentRepository, world.EnrollmentRepository, world.eventPublisher, rabbitMqPublisher);
     }
 }
