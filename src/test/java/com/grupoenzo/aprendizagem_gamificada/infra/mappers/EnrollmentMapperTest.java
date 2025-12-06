@@ -2,10 +2,12 @@ package com.grupoenzo.aprendizagem_gamificada.infra.mappers;
 
 import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.Course;
 import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.Enrollment;
+import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.ModuleGrade;
 import com.grupoenzo.aprendizagem_gamificada.core.domain.entities.Student;
 import com.grupoenzo.aprendizagem_gamificada.core.domain.valueobjects.Ticket;
 import com.grupoenzo.aprendizagem_gamificada.infra.entity.CourseJpaEntity;
 import com.grupoenzo.aprendizagem_gamificada.infra.entity.EnrollmentJpaEntity;
+import com.grupoenzo.aprendizagem_gamificada.infra.entity.ModuleGradeJpaEntity;
 import com.grupoenzo.aprendizagem_gamificada.infra.entity.StudentJpaEntity;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,6 +15,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -27,6 +30,8 @@ public class EnrollmentMapperTest {
     private StudentMapper studentMapper;
     @Mock
     private CourseMapper courseMapper;
+    @Mock
+    private ModuleGradeMapper moduleGradeMapper;
 
     @InjectMocks
     private EnrollmentMapper mapper;
@@ -105,6 +110,95 @@ public class EnrollmentMapperTest {
         assertEquals(id2, list.get(1).getId());
         assertSame(student2, list.get(1).getStudent());
         assertSame(course2, list.get(1).getCourse());
+    }
+
+    @Test
+    void map_entityWithModuleGrades_mapsModuleGrades() {
+        var id = UUID.randomUUID();
+        var mgId1 = UUID.randomUUID();
+        var mgId2 = UUID.randomUUID();
+
+        var entity = mock(EnrollmentJpaEntity.class);
+        var studentJpa = mock(StudentJpaEntity.class);
+        var courseJpa = mock(CourseJpaEntity.class);
+        var moduleGradeJpa1 = mock(ModuleGradeJpaEntity.class);
+        var moduleGradeJpa2 = mock(ModuleGradeJpaEntity.class);
+
+        when(entity.getId()).thenReturn(id);
+        when(entity.getStudent()).thenReturn(studentJpa);
+        when(entity.getCourse()).thenReturn(courseJpa);
+        when(entity.getModuleGrades()).thenReturn(List.of(moduleGradeJpa1, moduleGradeJpa2));
+
+        var student = new Student(UUID.randomUUID(), "S1", new Ticket(0));
+        var course = new Course(UUID.randomUUID(), "C1");
+        var moduleGrade1 = new ModuleGrade(mgId1, null, null, null, 8.5);
+        var moduleGrade2 = new ModuleGrade(mgId2, null, null, null, 9.0);
+
+        when(studentMapper.map(studentJpa)).thenReturn(student);
+        when(courseMapper.map(courseJpa)).thenReturn(course);
+        when(moduleGradeMapper.map(moduleGradeJpa1)).thenReturn(moduleGrade1);
+        when(moduleGradeMapper.map(moduleGradeJpa2)).thenReturn(moduleGrade2);
+
+        Enrollment result = mapper.map(entity);
+
+        assertNotNull(result);
+        assertEquals(id, result.getId());
+        assertSame(student, result.getStudent());
+        assertSame(course, result.getCourse());
+        assertNotNull(result.getModuleGrades());
+        assertEquals(2, result.getModuleGrades().size());
+        assertEquals(moduleGrade1, result.getModuleGrades().get(0));
+        assertEquals(moduleGrade2, result.getModuleGrades().get(1));
+    }
+
+    @Test
+    void map_entityWithNullModuleGrades_handlesGracefully() {
+        var id = UUID.randomUUID();
+
+        var entity = mock(EnrollmentJpaEntity.class);
+        var studentJpa = mock(StudentJpaEntity.class);
+        var courseJpa = mock(CourseJpaEntity.class);
+
+        when(entity.getId()).thenReturn(id);
+        when(entity.getStudent()).thenReturn(studentJpa);
+        when(entity.getCourse()).thenReturn(courseJpa);
+        when(entity.getModuleGrades()).thenReturn(null);
+
+        var student = new Student(UUID.randomUUID(), "S1", new Ticket(0));
+        var course = new Course(UUID.randomUUID(), "C1");
+
+        when(studentMapper.map(studentJpa)).thenReturn(student);
+        when(courseMapper.map(courseJpa)).thenReturn(course);
+
+        Enrollment result = mapper.map(entity);
+
+        assertNotNull(result);
+        assertEquals(id, result.getId());
+    }
+
+    @Test
+    void map_entityWithEmptyModuleGrades_handlesGracefully() {
+        var id = UUID.randomUUID();
+
+        var entity = mock(EnrollmentJpaEntity.class);
+        var studentJpa = mock(StudentJpaEntity.class);
+        var courseJpa = mock(CourseJpaEntity.class);
+
+        when(entity.getId()).thenReturn(id);
+        when(entity.getStudent()).thenReturn(studentJpa);
+        when(entity.getCourse()).thenReturn(courseJpa);
+        when(entity.getModuleGrades()).thenReturn(new ArrayList<>());
+
+        var student = new Student(UUID.randomUUID(), "S1", new Ticket(0));
+        var course = new Course(UUID.randomUUID(), "C1");
+
+        when(studentMapper.map(studentJpa)).thenReturn(student);
+        when(courseMapper.map(courseJpa)).thenReturn(course);
+
+        Enrollment result = mapper.map(entity);
+
+        assertNotNull(result);
+        assertEquals(id, result.getId());
     }
 }
 

@@ -29,8 +29,6 @@ public class ModuleGradeMapperTest {
     private StudentMapper studentMapper;
     @Mock
     private ModuleMapper moduleMapper;
-    @Mock
-    private EnrollmentMapper enrollmentMapper;
 
     @InjectMocks
     private ModuleGradeMapper mapper;
@@ -42,21 +40,17 @@ public class ModuleGradeMapperTest {
         var entity = mock(ModuleGradeJpaEntity.class);
         var moduleJpa = mock(ModuleJpaEntity.class);
         var studentJpa = mock(StudentJpaEntity.class);
-        var enrollmentJpa = mock(EnrollmentJpaEntity.class);
 
         when(entity.getId()).thenReturn(id);
         when(entity.getGrade()).thenReturn(7.5);
         when(entity.getModule()).thenReturn(moduleJpa);
         when(entity.getStudent()).thenReturn(studentJpa);
-        when(entity.getEnrollment()).thenReturn(enrollmentJpa);
 
         var module = new Module(UUID.randomUUID(), "M1", "desc", null);
         var student = new Student(UUID.randomUUID(), "S1", new Ticket(0));
-        var enrollment = new Enrollment(UUID.randomUUID(), student, null);
 
         when(moduleMapper.map(moduleJpa)).thenReturn(module);
         when(studentMapper.map(studentJpa)).thenReturn(student);
-        when(enrollmentMapper.map(enrollmentJpa)).thenReturn(enrollment);
 
         ModuleGrade result = mapper.map(entity);
 
@@ -64,7 +58,8 @@ public class ModuleGradeMapperTest {
         assertEquals(7.5, result.getGrade());
         assertSame(module, result.getModule());
         assertSame(student, result.getStudent());
-        assertSame(enrollment, result.getEnrollment());
+        // Enrollment é null pois é definido após o mapeamento pelo EnrollmentMapper
+        assertNull(result.getEnrollment());
     }
 
     @Test
@@ -77,27 +72,22 @@ public class ModuleGradeMapperTest {
 
         var moduleJpa = mock(ModuleJpaEntity.class);
         var studentJpa = mock(StudentJpaEntity.class);
-        var enrollmentJpa = mock(EnrollmentJpaEntity.class);
 
         when(entity1.getId()).thenReturn(id1);
         when(entity1.getGrade()).thenReturn(6.0);
         when(entity1.getModule()).thenReturn(moduleJpa);
         when(entity1.getStudent()).thenReturn(studentJpa);
-        when(entity1.getEnrollment()).thenReturn(enrollmentJpa);
 
         when(entity2.getId()).thenReturn(id2);
         when(entity2.getGrade()).thenReturn(8.0);
         when(entity2.getModule()).thenReturn(moduleJpa);
         when(entity2.getStudent()).thenReturn(studentJpa);
-        when(entity2.getEnrollment()).thenReturn(enrollmentJpa);
 
         var module = new Module(UUID.randomUUID(), "M1", null, null);
         var student = new Student(UUID.randomUUID(), "S1", new Ticket(0));
-        var enrollment = new Enrollment(UUID.randomUUID(), student, null);
 
         when(moduleMapper.map(moduleJpa)).thenReturn(module);
         when(studentMapper.map(studentJpa)).thenReturn(student);
-        when(enrollmentMapper.map(enrollmentJpa)).thenReturn(enrollment);
 
         List<ModuleGrade> list = mapper.map(List.of(entity1, entity2));
 

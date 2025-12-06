@@ -15,15 +15,20 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.context.ApplicationEventPublisher;
 
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.any;
 
 @ExtendWith(MockitoExtension.class)
 public class FinalizeCourseUseCaseTest {
@@ -31,6 +36,8 @@ public class FinalizeCourseUseCaseTest {
     private StudentRepository StudentRepository;
     @Mock
     private EnrollmentRepository EnrollmentRepository;
+    @Mock
+    private ApplicationEventPublisher eventPublisher;
     @InjectMocks
     private FinalizeCourseUseCase finalizeCourseUseCase;
 
@@ -55,7 +62,7 @@ public class FinalizeCourseUseCaseTest {
         ModuleGrade moduleGrade = new ModuleGrade(UUID.randomUUID(), module, student, enrollment, 7.0);
         enrollment.setModuleGrades(List.of(moduleGrade));
 
-        when(EnrollmentRepository.findById(enrollment.getId())).thenReturn(Optional.of(enrollment));
+        when(EnrollmentRepository.findByIdWithGrades(enrollment.getId())).thenReturn(Optional.of(enrollment));
 
         var ticketsBefore = student.getTicket().getValue();
         var result = finalizeCourseUseCase.execute(enrollment.getId());
@@ -63,6 +70,9 @@ public class FinalizeCourseUseCaseTest {
         var ticketsAfter = result.getStudent().getTicket().getValue();
         assertEquals(ticketsBefore + 3, ticketsAfter);
         assertEquals(com.grupoenzo.aprendizagem_gamificada.core.domain.enums.EnrollmentStatus.COMPLETED, result.getStatus());
+        
+        // Verificar que o evento foi publicado
+        verify(eventPublisher, times(1)).publishEvent(any());
     }
 
     @Test
@@ -71,7 +81,7 @@ public class FinalizeCourseUseCaseTest {
         ModuleGrade moduleGrade = new ModuleGrade(UUID.randomUUID(), module, student, enrollment, 5.0);
         enrollment.setModuleGrades(List.of(moduleGrade));
 
-        when(EnrollmentRepository.findById(enrollment.getId())).thenReturn(Optional.of(enrollment));
+        when(EnrollmentRepository.findByIdWithGrades(enrollment.getId())).thenReturn(Optional.of(enrollment));
 
         org.junit.jupiter.api.Assertions.assertThrows(com.grupoenzo.aprendizagem_gamificada.core.exceptions.InsufficientGradeException.class,
                 () -> finalizeCourseUseCase.execute(enrollment.getId()));
@@ -83,12 +93,15 @@ public class FinalizeCourseUseCaseTest {
         ModuleGrade moduleGrade = new ModuleGrade(UUID.randomUUID(), module, student, enrollment, 7.0);
         enrollment.setModuleGrades(List.of(moduleGrade));
 
-        when(EnrollmentRepository.findByStudentIdAndCourseId(student.getId(), course.getId())).thenReturn(Optional.of(enrollment));
+        when(EnrollmentRepository.findByStudentIdAndCourseIdWithGrades(student.getId(), course.getId())).thenReturn(Optional.of(enrollment));
 
         var ticketsBefore = student.getTicket().getValue();
         var ticketsAfter = finalizeCourseUseCase.execute(student.getId(), course.getId()).getStudent().getTicket().getValue();
 
         assertEquals(ticketsBefore + 3, ticketsAfter);
+        
+        // Verificar que o evento foi publicado
+        verify(eventPublisher, times(1)).publishEvent(any());
     }
 
     @Test
@@ -97,12 +110,15 @@ public class FinalizeCourseUseCaseTest {
         ModuleGrade moduleGrade = new ModuleGrade(UUID.randomUUID(), module, student, enrollment, 8.0);
         enrollment.setModuleGrades(List.of(moduleGrade));
 
-        when(EnrollmentRepository.findByStudentIdAndCourseId(student.getId(), course.getId())).thenReturn(Optional.of(enrollment));
+        when(EnrollmentRepository.findByStudentIdAndCourseIdWithGrades(student.getId(), course.getId())).thenReturn(Optional.of(enrollment));
 
         var ticketsBefore = student.getTicket().getValue();
         var ticketsAfter = finalizeCourseUseCase.execute(student.getId(), course.getId()).getStudent().getTicket().getValue();
 
         assertEquals(ticketsBefore + 3, ticketsAfter);
+        
+        // Verificar que o evento foi publicado
+        verify(eventPublisher, times(1)).publishEvent(any());
     }
 
     @Test
@@ -111,12 +127,15 @@ public class FinalizeCourseUseCaseTest {
         ModuleGrade moduleGrade = new ModuleGrade(UUID.randomUUID(), module, student, enrollment, 5.0);
         enrollment.setModuleGrades(List.of(moduleGrade));
 
-        when(EnrollmentRepository.findByStudentIdAndCourseId(student.getId(), course.getId())).thenReturn(Optional.of(enrollment));
+        when(EnrollmentRepository.findByStudentIdAndCourseIdWithGrades(student.getId(), course.getId())).thenReturn(Optional.of(enrollment));
 
         var ticketsBefore = student.getTicket().getValue();
         var ticketsAfter = finalizeCourseUseCase.execute(student.getId(), course.getId()).getStudent().getTicket().getValue();
 
         assertEquals(ticketsBefore, ticketsAfter);
+        
+        // Verificar que o evento NÃO foi publicado quando grade < 7
+        verify(eventPublisher, times(0)).publishEvent(any());
     }
 
     @Test

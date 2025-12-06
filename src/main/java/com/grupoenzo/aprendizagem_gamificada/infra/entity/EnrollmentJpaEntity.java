@@ -2,6 +2,7 @@ package com.grupoenzo.aprendizagem_gamificada.infra.entity;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 import com.grupoenzo.aprendizagem_gamificada.core.domain.enums.EnrollmentStatus;
@@ -33,6 +34,9 @@ public class EnrollmentJpaEntity {
     @ManyToOne
     @JoinColumn(name = "course_id")
     private CourseJpaEntity course;
+
+    @OneToMany(mappedBy = "enrollment", fetch = FetchType.LAZY)
+    private List<ModuleGradeJpaEntity> moduleGrades;
 
     @CreationTimestamp
     private LocalDate createdAt;

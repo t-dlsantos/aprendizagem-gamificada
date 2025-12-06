@@ -10,12 +10,10 @@ import java.util.List;
 public class ModuleGradeMapper {
     private final StudentMapper studentMapper;
     private final ModuleMapper moduleMapper;
-    private final EnrollmentMapper enrollmentMapper;
 
-    public ModuleGradeMapper(StudentMapper studentMapper, ModuleMapper moduleMapper, EnrollmentMapper enrollmentMapper) {
+    public ModuleGradeMapper(StudentMapper studentMapper, ModuleMapper moduleMapper) {
         this.studentMapper = studentMapper;
         this.moduleMapper = moduleMapper;
-        this.enrollmentMapper = enrollmentMapper;
     }
 
     public ModuleGrade map(ModuleGradeJpaEntity entity) {
@@ -23,7 +21,7 @@ public class ModuleGradeMapper {
                 entity.getId(),
                 moduleMapper.map(entity.getModule()),
                 studentMapper.map(entity.getStudent()),
-                enrollmentMapper.map(entity.getEnrollment()),
+                null,
                 entity.getGrade()
         );
     }

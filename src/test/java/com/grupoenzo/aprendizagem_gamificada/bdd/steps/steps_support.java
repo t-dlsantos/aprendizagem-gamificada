@@ -49,6 +49,6 @@ final class steps_support {
         world.StudentRepository = mock(StudentRepository.class);
         when(world.StudentRepository.save(world.student)).thenReturn(world.student);
 
-        world.finalizeCourseUseCase = new FinalizeCourseUseCase(world.StudentRepository, world.EnrollmentRepository);
+        world.finalizeCourseUseCase = new FinalizeCourseUseCase(world.StudentRepository, world.EnrollmentRepository, world.eventPublisher);
     }
 }

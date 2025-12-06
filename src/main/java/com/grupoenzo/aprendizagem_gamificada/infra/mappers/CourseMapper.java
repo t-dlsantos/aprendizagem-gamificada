@@ -20,7 +20,7 @@ public class CourseMapper {
                 entity.getId(),
                 entity.getName(),
                 entity.getDescription(),
-                List.of(),
+                new java.util.ArrayList<>(),
                 moduleMapper.map(entity.getModules())
         );
     }

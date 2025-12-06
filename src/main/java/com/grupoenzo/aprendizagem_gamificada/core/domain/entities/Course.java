@@ -1,5 +1,6 @@
 package com.grupoenzo.aprendizagem_gamificada.core.domain.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -8,20 +9,22 @@ import com.grupoenzo.aprendizagem_gamificada.core.domain.abstracts.Entity;
 public class Course extends Entity {
     private String name;
     private String description;
-    private List<Enrollment> enrollments;
-    private List<Module> modules;
+    private List<Enrollment> enrollments = new ArrayList<>();
+    private List<Module> modules = new ArrayList<>();
 
     public Course(UUID id, String name, String description, List<Enrollment> enrollments, List<Module> modules) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.enrollments = enrollments;
-        this.modules = modules;
+        this.enrollments = enrollments != null ? enrollments : new ArrayList<>();
+        this.modules = modules != null ? modules : new ArrayList<>();
     }
 
     public Course(UUID id, String name) {
         this.id = id;
         this.name = name;
+        this.enrollments = new ArrayList<>();
+        this.modules = new ArrayList<>();
     }
 
     public UUID getId() {

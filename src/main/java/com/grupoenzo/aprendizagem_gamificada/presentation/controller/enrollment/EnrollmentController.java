@@ -26,9 +26,11 @@ public class EnrollmentController implements EnrollmentResource {
         try {
             var enrollment = finalizeCourseUseCase.execute(id);
 
-            var enrolledCourseIds = enrollment.getStudent().getEnrollments().stream()
-                .map(e -> e.getCourse().getId())
-                .collect(Collectors.toList());
+            var enrolledCourseIds = enrollment.getStudent().getEnrollments() != null
+                ? enrollment.getStudent().getEnrollments().stream()
+                    .map(e -> e.getCourse().getId())
+                    .collect(Collectors.toList())
+                : java.util.Collections.<java.util.UUID>emptyList();
 
             var recommendation = recommenderClient.getRecommendation(
                 new RecommendationRequest(
